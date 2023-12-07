@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpkh16ne1rdqk"]
+[gd_scene load_steps=6 format=3 uid="uid://dpkh16ne1rdqk"]
 
 [ext_resource type="Texture2D" uid="uid://c6l6hkxrbwpt4" path="res://assets/tile_set_canvas-Sheet.png" id="1_vtwl3"]
 [ext_resource type="PackedScene" uid="uid://fn12e6pvxrin" path="res://player/rob.tscn" id="2_kt2pe"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="3_n7slv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvjl8"]
 texture = ExtResource("1_vtwl3")
@@ -60,3 +61,11 @@ metadata/_edit_lock_ = true
 
 [node name="Rob" parent="." instance=ExtResource("2_kt2pe")]
 position = Vector2(84, 78)
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("node_to_follow")]
+limit_left = 0
+limit_top = 0
+limit_right = 260
+limit_bottom = 160
+script = ExtResource("3_n7slv")
+node_to_follow = NodePath("../Rob")

@@ -1,28 +1,44 @@
 class_name RobPlayer extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+@export var SPEED: float = 150.0
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+func _ready():
+	animated_sprite.play("default")
 
-func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += gravity * delta
+func _process(_delta) -> void:
+	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
+	handle_walk_anim(direction)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+func _physics_process(_delta) -> void:
+	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
+	# if direction.x != 0 or direction.y != 0:
+	# 	last_direction = direction
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = direction * SPEED
+			velocity = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.y = move_toward(velocity.y, 0, SPEED)
 
+	# if cant_move:
+	# 	velocity = Vector2.ZERO
 	move_and_slide()
+
+func handle_walk_anim(direction: Vector2) -> void:
+	if direction.x > 0:
+		animated_sprite.flip_h = true
+		animated_sprite.play("floatside")
+	if direction.y > 0:
+		animated_sprite.play("floatdown")
+	if direction.x < 0:
+		animated_sprite.flip_h = false
+		animated_sprite.play("floatside")
+	if direction.y < 0:
+		animated_sprite.play("floatup")
+
+	if direction.x == 0 and direction.y == 0:
+		animated_sprite.play("default")
+
