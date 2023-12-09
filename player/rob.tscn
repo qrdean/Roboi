@@ -1,7 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=25 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
+[ext_resource type="Script" path="res://state_machine/state_machine.gd" id="3_b33q2"]
+[ext_resource type="Script" path="res://state_machine/states/idle.gd" id="4_p00cl"]
+[ext_resource type="Script" path="res://state_machine/states/move.gd" id="5_hiu63"]
+[ext_resource type="Script" path="res://state_machine/states/roll.gd" id="6_d2tv0"]
+[ext_resource type="Script" path="res://player/player_movement_component.gd" id="7_sr5gj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x48aq"]
 atlas = ExtResource("1_5ovme")
@@ -144,5 +149,31 @@ script = ExtResource("1_tortu")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ddcvn")
-frame_progress = 0.607279
+animation = &"floatdown"
 metadata/_edit_lock_ = true
+
+[node name="movement_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_b33q2")
+starting_state = NodePath("idle_state")
+
+[node name="idle_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "roll_state")]
+script = ExtResource("4_p00cl")
+move_state = NodePath("../move_state")
+roll_state = NodePath("../roll_state")
+animation_name = "default"
+move_speed = null
+
+[node name="move_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("roll_state", "idle_state")]
+script = ExtResource("5_hiu63")
+roll_state = NodePath("../roll_state")
+idle_state = NodePath("../idle_state")
+animation_name = "floatdown"
+
+[node name="roll_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state")]
+script = ExtResource("6_d2tv0")
+move_state = NodePath("../move_state")
+animation_name = "floatdown"
+move_speed = 200.0
+
+[node name="movement_component" type="Node" parent="."]
+script = ExtResource("7_sr5gj")
