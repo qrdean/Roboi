@@ -3,7 +3,7 @@ class_name Move extends State
 @export var roll_state: State
 @export var idle_state: State
 
-func process_input(event: InputEvent) -> State:
+func process_input(_event: InputEvent) -> State:
 	if Input.is_action_just_pressed('roll'):
 		return roll_state
 
@@ -17,12 +17,26 @@ func process_physics(_delta: float) -> State:
 		return idle_state
 
 	animations.flip_h = movement_x < 0
-	# 	velocity.x = move_toward(velocity.x, 0, SPEED)
-	# 	velocity.y = move_toward(velocity.y, 0, SPEED)
-	# parent.velocity.x = movement_x
-	# parent.velocity.y = movement_y
+
 	parent.velocity = get_movement_input() * move_speed
 
 	parent.move_and_slide()
+
+	return null
+
+func process_frame(_delta: float) -> State:
+	if get_movement_input().x > 0:
+		animations.flip_h = true
+		animations.play("floatside")
+		return null
+	if get_movement_input().y > 0:
+		animations.play("floatdown")
+		return null
+	if get_movement_input().x < 0:
+		animations.flip_h = false
+		animations.play("floatside")
+		return null
+	if get_movement_input().y < 0:
+		animations.play("floatup")
 
 	return null

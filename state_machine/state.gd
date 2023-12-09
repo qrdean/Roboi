@@ -25,3 +25,5 @@ func process_physics(_delta: float) -> State:
 func get_movement_input() -> Vector2:
 	return move_component.get_movement_direction()
 
+func animation_change(new_animation) -> void:
+	animations.play(new_animation)

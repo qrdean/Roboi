@@ -173,7 +173,7 @@ animation_name = "floatdown"
 script = ExtResource("6_d2tv0")
 move_state = NodePath("../move_state")
 animation_name = "floatdown"
-move_speed = 200.0
+move_speed = 175.0
 
 [node name="movement_component" type="Node" parent="."]
 script = ExtResource("7_sr5gj")
