@@ -2,6 +2,10 @@ class_name Move extends State
 
 @export var roll_state: State
 @export var idle_state: State
+@export var side_animation_name: String
+@export var down_animation_name: String
+@export var up_animation_name: String
+
 
 func process_input(_event: InputEvent) -> State:
 	if Input.is_action_just_pressed('roll'):
@@ -27,16 +31,16 @@ func process_physics(_delta: float) -> State:
 func process_frame(_delta: float) -> State:
 	if get_movement_input().x > 0:
 		animations.flip_h = true
-		animations.play("floatside")
+		animations.play(side_animation_name)
 		return null
 	if get_movement_input().y > 0:
-		animations.play("floatdown")
+		animations.play(down_animation_name)
 		return null
 	if get_movement_input().x < 0:
 		animations.flip_h = false
-		animations.play("floatside")
+		animations.play(side_animation_name)
 		return null
 	if get_movement_input().y < 0:
-		animations.play("floatup")
+		animations.play(up_animation_name)
 
 	return null

@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://cywqfk1n2o7po"]
+
+[ext_resource type="Script" path="res://player/gun_bullet.gd" id="1_a50pf"]
+[ext_resource type="Texture2D" uid="uid://b5f2vf632m5jh" path="res://assets/fire_bolt.png" id="1_m1hub"]
+[ext_resource type="Texture2D" uid="uid://dndwahrlki3em" path="res://assets/elec_bullet.png" id="2_0gkan"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2pjv"]
+atlas = ExtResource("2_0gkan")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xx01x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2pjv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_a50pf")
+SPEED = 250
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_xx01x")
+frame_progress = 0.949576
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = ExtResource("1_m1hub")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=27 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://state_machine/states/move.gd" id="5_hiu63"]
 [ext_resource type="Script" path="res://state_machine/states/roll.gd" id="6_d2tv0"]
 [ext_resource type="Script" path="res://player/player_movement_component.gd" id="7_sr5gj"]
+[ext_resource type="Script" path="res://player/gun.gd" id="8_3yabc"]
+[ext_resource type="PackedScene" uid="uid://cywqfk1n2o7po" path="res://player/bullet.tscn" id="9_lh028"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x48aq"]
 atlas = ExtResource("1_5ovme")
@@ -152,6 +154,9 @@ sprite_frames = SubResource("SpriteFrames_ddcvn")
 animation = &"floatdown"
 metadata/_edit_lock_ = true
 
+[node name="movement_component" type="Node" parent="."]
+script = ExtResource("7_sr5gj")
+
 [node name="movement_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("3_b33q2")
 starting_state = NodePath("idle_state")
@@ -167,6 +172,9 @@ move_speed = null
 script = ExtResource("5_hiu63")
 roll_state = NodePath("../roll_state")
 idle_state = NodePath("../idle_state")
+side_animation_name = "floatside"
+down_animation_name = "floatdown"
+up_animation_name = "floatup"
 animation_name = "floatdown"
 
 [node name="roll_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state")]
@@ -175,5 +183,8 @@ move_state = NodePath("../move_state")
 animation_name = "floatdown"
 move_speed = 175.0
 
-[node name="movement_component" type="Node" parent="."]
-script = ExtResource("7_sr5gj")
+[node name="Weapon" type="Node2D" parent="."]
+script = ExtResource("8_3yabc")
+bullet_scene = ExtResource("9_lh028")
+
+[node name="weapon_sprite" type="Sprite2D" parent="Weapon"]
