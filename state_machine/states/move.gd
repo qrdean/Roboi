@@ -6,7 +6,6 @@ class_name Move extends State
 @export var down_animation_name: String
 @export var up_animation_name: String
 
-
 func process_input(_event: InputEvent) -> State:
 	if Input.is_action_just_pressed('roll'):
 		return roll_state

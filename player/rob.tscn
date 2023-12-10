@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=31 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -9,6 +9,12 @@
 [ext_resource type="Script" path="res://player/player_movement_component.gd" id="7_sr5gj"]
 [ext_resource type="Script" path="res://player/gun.gd" id="8_3yabc"]
 [ext_resource type="PackedScene" uid="uid://cywqfk1n2o7po" path="res://player/bullet.tscn" id="9_lh028"]
+[ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="10_uiibx"]
+[ext_resource type="PackedScene" uid="uid://cnxxjdlmuf7bj" path="res://components/hurtbox.tscn" id="11_j5bhp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1cvsb"]
+radius = 4.0
+height = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x48aq"]
 atlas = ExtResource("1_5ovme")
@@ -145,8 +151,16 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coxqi"]
+size = Vector2(8, 14)
+
 [node name="Rob" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_tortu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_1cvsb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -188,3 +202,14 @@ script = ExtResource("8_3yabc")
 bullet_scene = ExtResource("9_lh028")
 
 [node name="weapon_sprite" type="Sprite2D" parent="Weapon"]
+
+[node name="health_component" parent="." instance=ExtResource("10_uiibx")]
+max_health = 5
+
+[node name="Hurtbox" parent="." instance=ExtResource("11_j5bhp")]
+collision_layer = 2
+collision_mask = 20
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_coxqi")

@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://domap6hqoebvh"]
+
+[ext_resource type="Script" path="res://enemies/blob.gd" id="1_hjuuw"]
+[ext_resource type="Texture2D" uid="uid://ddvvntw6pgxax" path="res://assets/slime_enemy.png" id="1_qtw4c"]
+[ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="2_x7mgb"]
+[ext_resource type="Script" path="res://components/hurtbox.gd" id="3_knxtb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_leckk"]
+size = Vector2(32, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mgyef"]
+size = Vector2(33, 22)
+
+[node name="blob" type="CharacterBody2D"]
+script = ExtResource("1_hjuuw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_leckk")
+
+[node name="SlimeEnemy" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_qtw4c")
+
+[node name="health_component" parent="." instance=ExtResource("2_x7mgb")]
+max_health = 2
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("3_knxtb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0.5, 5)
+shape = SubResource("RectangleShape2D_mgyef")

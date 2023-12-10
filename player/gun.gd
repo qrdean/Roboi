@@ -33,7 +33,6 @@ func shoot():
 	bullet.direction = (get_global_mouse_position() - self.global_position).normalized()
 	get_parent().call_deferred("add_sibling", bullet)
 	
-
 # func set_stats(weapon_stats: WeaponResource):
 # 	bullet_scene = weapon_stats.bullet_scene
 # 	$Sprite2D.texture = weapon_stats.texture
