@@ -28,6 +28,6 @@ func shoot_gun() -> void:
 	if Input.is_action_just_pressed("attack"):
 		gun.shoot()
 
-func _take_damage_bus():
-	health.damaged.emit(1)
+func _take_damage_bus(damage: int):
+	health.damaged.emit(damage)
 

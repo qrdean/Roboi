@@ -8,6 +8,7 @@ class_name GunBullet extends Area2D
 
 @export var SPEED = 400
 @export var KNOCKBACK_POWER = 100.0
+@export var attack_damage = 1
 var direction = Vector2.RIGHT
 
 # Called when the node enters the scene tree for the first time.

@@ -12,8 +12,12 @@ func _ready():
 func _physics_process(_delta):
 	pass
 
-func _take_damage_bus():
-	health.damaged.emit(1)
+func _take_damage_bus(damage: int):
+	health.damaged.emit(damage)
 
 func _handle_death():
-	print_debug("death of blob")
+	hurtbox.take_damage.disconnect(_take_damage_bus)
+	health.dead.disconnect(_handle_death)
+
+	# set the death state that will take care of the queue_free()
+	self.queue_free()
