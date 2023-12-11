@@ -1,13 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://domap6hqoebvh"]
+[gd_scene load_steps=16 format=3 uid="uid://domap6hqoebvh"]
 
 [ext_resource type="Script" path="res://enemies/blob.gd" id="1_hjuuw"]
 [ext_resource type="Texture2D" uid="uid://ddvvntw6pgxax" path="res://assets/slime_enemy.png" id="1_qtw4c"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="2_x7mgb"]
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="3_knxtb"]
 [ext_resource type="Script" path="res://state_machine/state_machine.gd" id="5_vbfv3"]
-[ext_resource type="Script" path="res://state_machine/states/idle.gd" id="6_u5gn5"]
-[ext_resource type="Script" path="res://state_machine/states/move.gd" id="7_rbplt"]
+[ext_resource type="Script" path="res://enemies/states/idle.gd" id="6_x7jw3"]
+[ext_resource type="Script" path="res://enemies/states/move.gd" id="7_5ef21"]
+[ext_resource type="Script" path="res://enemies/states/charge.gd" id="8_3j7t8"]
 [ext_resource type="Script" path="res://enemies/blob_movement_component.gd" id="8_g1jrr"]
+[ext_resource type="Script" path="res://enemies/player_detection.gd" id="9_aad2r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_leckk"]
 size = Vector2(32, 20)
@@ -31,6 +33,7 @@ animations = [{
 size = Vector2(33, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni2vs"]
+size = Vector2(20, 45)
 
 [node name="blob" type="CharacterBody2D"]
 script = ExtResource("1_hjuuw")
@@ -64,25 +67,31 @@ shape = SubResource("RectangleShape2D_mgyef")
 script = ExtResource("5_vbfv3")
 starting_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state")]
-script = ExtResource("6_u5gn5")
+[node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state")]
+script = ExtResource("6_x7jw3")
 move_state = NodePath("../move")
-animation_name = "default"
-move_speed = 75.0
+charge_state = NodePath("../charge")
 
-[node name="move" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("idle_state")]
-script = ExtResource("7_rbplt")
+[node name="move" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("charge_state", "idle_state")]
+script = ExtResource("7_5ef21")
+charge_state = NodePath("../charge")
 idle_state = NodePath("../idle")
-side_animation_name = "default"
-down_animation_name = "default"
-up_animation_name = "default"
+
+[node name="charge" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state", "idle_state")]
+script = ExtResource("8_3j7t8")
+move_state = NodePath("../move")
+charge_state = NodePath(".")
+idle_state = NodePath("../idle")
 animation_name = "default"
-move_speed = 50.0
 
 [node name="movement_component" type="Node" parent="."]
 script = ExtResource("8_g1jrr")
 
 [node name="player_detection" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("9_aad2r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection"]
+position = Vector2(0, -12.5)
 shape = SubResource("RectangleShape2D_ni2vs")
