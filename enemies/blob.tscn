@@ -1,12 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://domap6hqoebvh"]
+[gd_scene load_steps=13 format=3 uid="uid://domap6hqoebvh"]
 
 [ext_resource type="Script" path="res://enemies/blob.gd" id="1_hjuuw"]
 [ext_resource type="Texture2D" uid="uid://ddvvntw6pgxax" path="res://assets/slime_enemy.png" id="1_qtw4c"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="2_x7mgb"]
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="3_knxtb"]
+[ext_resource type="Script" path="res://state_machine/state_machine.gd" id="5_vbfv3"]
+[ext_resource type="Script" path="res://state_machine/states/idle.gd" id="6_u5gn5"]
+[ext_resource type="Script" path="res://state_machine/states/move.gd" id="7_rbplt"]
+[ext_resource type="Script" path="res://enemies/blob_movement_component.gd" id="8_g1jrr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_leckk"]
 size = Vector2(32, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_siekb"]
+atlas = ExtResource("1_qtw4c")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l7156"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_siekb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgyef"]
 size = Vector2(33, 22)
@@ -22,6 +41,10 @@ shape = SubResource("RectangleShape2D_leckk")
 texture_filter = 1
 texture = ExtResource("1_qtw4c")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_l7156")
+
 [node name="health_component" parent="." instance=ExtResource("2_x7mgb")]
 max_health = 2
 
@@ -33,3 +56,25 @@ script = ExtResource("3_knxtb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0.5, 5)
 shape = SubResource("RectangleShape2D_mgyef")
+
+[node name="movement_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("5_vbfv3")
+starting_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state")]
+script = ExtResource("6_u5gn5")
+move_state = NodePath("../move")
+animation_name = "default"
+move_speed = 75.0
+
+[node name="move" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("7_rbplt")
+idle_state = NodePath("../idle")
+side_animation_name = "default"
+down_animation_name = "default"
+up_animation_name = "default"
+animation_name = "default"
+move_speed = 50.0
+
+[node name="movement_component" type="Node" parent="."]
+script = ExtResource("8_g1jrr")

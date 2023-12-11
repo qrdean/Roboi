@@ -1,16 +1,27 @@
 extends CharacterBody2D
 
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var movement_state_machine: Node = $movement_state_machine
+@onready var blob_movement_component = $movement_component
+
 @onready var health: HealthComponent = $health_component
 @onready var hurtbox: Hurtbox = $Hurtbox
 
 const SPEED = 75.0
 
 func _ready():
+	movement_state_machine.init(self, animated_sprite, blob_movement_component)
 	hurtbox.take_damage.connect(_take_damage_bus)
 	health.dead.connect(_handle_death)
 
-func _physics_process(_delta):
-	pass
+func _unhandled_input(event):
+	movement_state_machine.process_input(event)
+
+func _physics_process(delta):
+	movement_state_machine.process_physics(delta)
+
+func _process(delta):
+	movement_state_machine.process_frame(delta)
 
 func _take_damage_bus(damage: int):
 	health.damaged.emit(damage)
