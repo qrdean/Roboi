@@ -7,9 +7,15 @@ extends CharacterBody2D
 @onready var health: HealthComponent = $health_component
 @onready var hurtbox: Hurtbox = $Hurtbox
 
+@export var player_node_name: String
+
 const SPEED = 75.0
 
 func _ready():
+	# Get the player from the parent tree. Set to the movement component for tracking
+	var player_node: CharacterBody2D = get_parent().get_node(player_node_name)
+	blob_movement_component.init(player_node)
+
 	movement_state_machine.init(self, animated_sprite, blob_movement_component)
 	hurtbox.take_damage.connect(_take_damage_bus)
 	health.dead.connect(_handle_death)

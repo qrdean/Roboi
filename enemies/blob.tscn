@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://domap6hqoebvh"]
+[gd_scene load_steps=14 format=3 uid="uid://domap6hqoebvh"]
 
 [ext_resource type="Script" path="res://enemies/blob.gd" id="1_hjuuw"]
 [ext_resource type="Texture2D" uid="uid://ddvvntw6pgxax" path="res://assets/slime_enemy.png" id="1_qtw4c"]
@@ -30,8 +30,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgyef"]
 size = Vector2(33, 22)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni2vs"]
+
 [node name="blob" type="CharacterBody2D"]
 script = ExtResource("1_hjuuw")
+player_node_name = "Rob"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)
@@ -78,3 +81,8 @@ move_speed = 50.0
 
 [node name="movement_component" type="Node" parent="."]
 script = ExtResource("8_g1jrr")
+
+[node name="player_detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection"]
+shape = SubResource("RectangleShape2D_ni2vs")
