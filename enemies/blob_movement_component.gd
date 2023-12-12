@@ -1,10 +1,7 @@
 extends Node
 
-var direction := Vector2(0.0, 0.0)
 var player_node: CharacterBody2D
 var player_detection: Area2D
-
-var charging = 0
 
 func _ready():
 	pass
@@ -19,6 +16,3 @@ func get_movement_direction() -> Vector2:
 
 	return Vector2(0.0, 0.0)
 
-func _set_charge():
-	charging = 1
-	print_debug("setting charge")

@@ -1,0 +1,99 @@
+[gd_scene load_steps=16 format=3 uid="uid://dio5tw3p7syjk"]
+
+[ext_resource type="Texture2D" uid="uid://clqvo44vnb734" path="res://assets/popsickle.png" id="1_2pyqo"]
+[ext_resource type="Script" path="res://enemies/popsickle.gd" id="1_eshyl"]
+[ext_resource type="PackedScene" uid="uid://cnxxjdlmuf7bj" path="res://components/hurtbox.tscn" id="2_u0d5f"]
+[ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="3_6ojk0"]
+[ext_resource type="Script" path="res://enemies/states/idle.gd" id="4_psphh"]
+[ext_resource type="Script" path="res://enemies/states/move.gd" id="5_1qumu"]
+[ext_resource type="Script" path="res://state_machine/state_machine.gd" id="5_55wln"]
+[ext_resource type="Script" path="res://enemies/states/charge.gd" id="6_gfsdh"]
+[ext_resource type="Script" path="res://enemies/player_detection.gd" id="9_a0rgm"]
+[ext_resource type="Script" path="res://enemies/blob_movement_component.gd" id="9_ox6ho"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6m4vc"]
+atlas = ExtResource("1_2pyqo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hvxp4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6m4vc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clxk5"]
+size = Vector2(14, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lath5"]
+size = Vector2(16, 15)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jdcen"]
+radius = 45.0
+
+[node name="popsickle" type="CharacterBody2D"]
+script = ExtResource("1_eshyl")
+player_node_name = "Rob"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_hvxp4")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_clxk5")
+metadata/_edit_lock_ = true
+
+[node name="health_component" parent="." instance=ExtResource("3_6ojk0")]
+max_health = 5
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_u0d5f")]
+collision_layer = 4
+collision_mask = 8
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_lath5")
+metadata/_edit_lock_ = true
+
+[node name="movement_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("5_55wln")
+starting_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state")]
+script = ExtResource("4_psphh")
+move_state = NodePath("../move")
+charge_state = NodePath("../charge")
+animation_name = "default"
+move_speed = 100.0
+
+[node name="move" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("charge_state", "idle_state")]
+script = ExtResource("5_1qumu")
+charge_state = NodePath("../charge")
+idle_state = NodePath("../idle")
+animation_name = "default"
+move_speed = 100.0
+
+[node name="charge" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state", "idle_state")]
+script = ExtResource("6_gfsdh")
+move_state = NodePath("../move")
+charge_state = NodePath(".")
+idle_state = NodePath("../idle")
+animation_name = "default"
+
+[node name="movement_component" type="Node" parent="."]
+script = ExtResource("9_ox6ho")
+
+[node name="player_detection" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("9_a0rgm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection"]
+shape = SubResource("CircleShape2D_jdcen")

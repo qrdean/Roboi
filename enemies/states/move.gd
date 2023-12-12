@@ -20,14 +20,14 @@ func exit() -> void:
 	player_detection.player_detected.disconnect(_activate_charge)
 
 func process_physics(_delta: float) -> State:
-	var movement_y = get_movement_input().y * move_speed
-	var movement_x = get_movement_input().x * move_speed
+	var movement_y = _get_movement_input().y * move_speed
+	var movement_x = _get_movement_input().x * move_speed
 	var movement = Vector2(movement_x, movement_y)
 	
 	if movement.x == 0 && movement.y == 0:
 		return idle_state
 
-	parent.velocity = get_movement_input() * move_speed
+	parent.velocity = _get_movement_input() * move_speed
 	parent.move_and_slide() 
 
 	return null
@@ -45,5 +45,5 @@ func process_frame(delta: float) -> State:
 func _activate_charge() -> void:
 	charging = true
 
-func get_movement_input() -> Vector2:
+func _get_movement_input() -> Vector2:
 	return direction
