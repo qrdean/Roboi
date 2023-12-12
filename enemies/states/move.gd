@@ -2,13 +2,19 @@ class_name BlobMove extends State
 
 @export var charge_state: State
 @export var idle_state: State
+@export var time_to_idle := 1.0
 
 var player_detection: PlayerDetection
 var charging = false
 
+var idle_timer := 0.0
+var direction := Vector2(1.0, 0.0)
+
 func enter() -> void:
 	super()
+	idle_timer = time_to_idle
 	player_detection.player_detected.connect(_activate_charge)
+	direction = Vector2(pow(-1.0, randi() % 2), pow(-1.0, randi() % 2))
 
 func exit() -> void:
 	player_detection.player_detected.disconnect(_activate_charge)
@@ -26,10 +32,14 @@ func process_physics(_delta: float) -> State:
 
 	return null
 
-func process_frame(_delta: float) -> State:
+func process_frame(delta: float) -> State:
+	idle_timer -= delta
 	if charging:
 		charging = false
 		return charge_state
+	if idle_timer <= 0.0:
+		return idle_state
+
 	return null
 
 func _activate_charge() -> void:

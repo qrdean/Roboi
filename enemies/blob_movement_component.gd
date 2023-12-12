@@ -12,13 +12,10 @@ func _ready():
 func init(p_player_node: CharacterBody2D, p_player_detection: Area2D):
 	player_node = p_player_node
 	player_detection = p_player_detection
-	# if player_detection:
-	# 	player_detection.player_detected.connect(_set_charge)
 
 func get_movement_direction() -> Vector2:
 	if player_node:
 		return (player_node.global_position - get_parent().global_position).normalized()
-	# if charging:
 
 	return Vector2(0.0, 0.0)
 
