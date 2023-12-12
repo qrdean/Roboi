@@ -44,3 +44,6 @@ func process_frame(delta: float) -> State:
 
 func _activate_charge() -> void:
 	charging = true
+
+func get_movement_input() -> Vector2:
+	return direction
