@@ -4,14 +4,11 @@ extends CharacterBody2D
 @onready var movement_state_machine: Node = $movement_state_machine
 @onready var movement_component = $movement_component
 
-@onready var attack_state_machine: Node = $attack_state_machine
-
 @onready var health: HealthComponent = $health_component
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var player_detection: Area2D = $player_detection
 
 @export var player_node_name: String
-@export var fire_node_name: String
 
 const SPEED = 75.0
 
@@ -23,15 +20,7 @@ func _ready():
 	for child in movement_state_machine.get_children():
 		child.player_detection = player_detection
 
-	for child in attack_state_machine.get_children():
-		child.player_detection = player_detection
-
-	var attack_state = attack_state_machine.get_node_or_null(fire_node_name)
-	if attack_state:
-		pass
-
 	movement_state_machine.init(self, animated_sprite, movement_component)
-	attack_state_machine.init(self, animated_sprite, movement_component)
 	hurtbox.take_damage.connect(_take_damage_bus)
 	health.dead.connect(_handle_death)
 

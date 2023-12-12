@@ -1,15 +1,17 @@
-[gd_scene load_steps=16 format=3 uid="uid://dio5tw3p7syjk"]
+[gd_scene load_steps=18 format=3 uid="uid://dio5tw3p7syjk"]
 
 [ext_resource type="Texture2D" uid="uid://clqvo44vnb734" path="res://assets/popsickle.png" id="1_2pyqo"]
-[ext_resource type="Script" path="res://enemies/popsickle.gd" id="1_eshyl"]
+[ext_resource type="Script" path="res://enemies/popsickle/popsickle.gd" id="1_eshyl"]
 [ext_resource type="PackedScene" uid="uid://cnxxjdlmuf7bj" path="res://components/hurtbox.tscn" id="2_u0d5f"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="3_6ojk0"]
 [ext_resource type="Script" path="res://enemies/states/idle.gd" id="4_psphh"]
 [ext_resource type="Script" path="res://enemies/states/move.gd" id="5_1qumu"]
 [ext_resource type="Script" path="res://state_machine/state_machine.gd" id="5_55wln"]
-[ext_resource type="Script" path="res://enemies/states/charge.gd" id="6_gfsdh"]
 [ext_resource type="Script" path="res://enemies/player_detection.gd" id="9_a0rgm"]
 [ext_resource type="Script" path="res://enemies/blob_movement_component.gd" id="9_ox6ho"]
+[ext_resource type="Script" path="res://enemies/states/attack_idle.gd" id="10_7nfy5"]
+[ext_resource type="Script" path="res://enemies/states/attack_fire.gd" id="11_d5dom"]
+[ext_resource type="PackedScene" uid="uid://brh4uqbad42km" path="res://components/weapon_component.tscn" id="12_v1shg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6m4vc"]
 atlas = ExtResource("1_2pyqo")
@@ -66,29 +68,33 @@ metadata/_edit_lock_ = true
 script = ExtResource("5_55wln")
 starting_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state")]
+[node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state")]
 script = ExtResource("4_psphh")
 move_state = NodePath("../move")
-charge_state = NodePath("../charge")
 animation_name = "default"
 move_speed = 100.0
 
-[node name="move" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("charge_state", "idle_state")]
+[node name="move" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("5_1qumu")
-charge_state = NodePath("../charge")
 idle_state = NodePath("../idle")
 animation_name = "default"
 move_speed = 100.0
-
-[node name="charge" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state", "idle_state")]
-script = ExtResource("6_gfsdh")
-move_state = NodePath("../move")
-charge_state = NodePath(".")
-idle_state = NodePath("../idle")
-animation_name = "default"
 
 [node name="movement_component" type="Node" parent="."]
 script = ExtResource("9_ox6ho")
+
+[node name="attack_state_machine" type="Node" parent="."]
+script = ExtResource("5_55wln")
+
+[node name="idle" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("attack_fire")]
+script = ExtResource("10_7nfy5")
+attack_fire = NodePath("../fire")
+animation_name = "default"
+
+[node name="fire" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("attack_idle")]
+script = ExtResource("11_d5dom")
+attack_idle = NodePath("../idle")
+animation_name = "default"
 
 [node name="player_detection" type="Area2D" parent="."]
 collision_layer = 32
@@ -97,3 +103,5 @@ script = ExtResource("9_a0rgm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection"]
 shape = SubResource("CircleShape2D_jdcen")
+
+[node name="weapon_component" parent="." instance=ExtResource("12_v1shg")]

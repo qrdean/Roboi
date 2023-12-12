@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://domap6hqoebvh"]
 
-[ext_resource type="Script" path="res://enemies/blob.gd" id="1_hjuuw"]
+[ext_resource type="Script" path="res://enemies/blob/blob.gd" id="1_hjuuw"]
 [ext_resource type="Texture2D" uid="uid://ddvvntw6pgxax" path="res://assets/slime_enemy.png" id="1_qtw4c"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="2_x7mgb"]
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="3_knxtb"]

@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://c6l6hkxrbwpt4" path="res://assets/tile_set_canvas-Sheet.png" id="1_vtwl3"]
 [ext_resource type="PackedScene" uid="uid://fn12e6pvxrin" path="res://player/rob.tscn" id="2_kt2pe"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="3_n7slv"]
-[ext_resource type="PackedScene" uid="uid://domap6hqoebvh" path="res://enemies/blob.tscn" id="4_d0epm"]
-[ext_resource type="PackedScene" uid="uid://dio5tw3p7syjk" path="res://enemies/popsickle.tscn" id="4_lkeh5"]
+[ext_resource type="PackedScene" uid="uid://domap6hqoebvh" path="res://enemies/blob/blob.tscn" id="4_d0epm"]
+[ext_resource type="PackedScene" uid="uid://dio5tw3p7syjk" path="res://enemies/popsickle/popsickle.tscn" id="4_lkeh5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvjl8"]
 texture = ExtResource("1_vtwl3")

@@ -5,7 +5,7 @@ extends Node
 var current_state: State
 
 func init(parent: CharacterBody2D, animations: AnimatedSprite2D, move_component) -> void:
-	for child in get_children():
+	for child: State in get_children():
 		child.parent = parent
 		child.animations = animations
 		child.move_component = move_component
