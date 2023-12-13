@@ -2,7 +2,7 @@ extends Move
 
 @export var move_state: State
 
-@export var time_to_roll := 0.5
+@export var time_to_roll := 0.25
 
 var roll_timer := 0.0
 var direction := Vector2(1.0, 0.0)

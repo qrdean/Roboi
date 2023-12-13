@@ -13,6 +13,9 @@ func enter() -> void:
 func exit() -> void:
 	player_detection.player_detected.disconnect(_activate_fire)
 
+func process_physics(_delta: float) -> State:
+	return null
+
 func process_frame(_delta: float) -> State:
 	if firing:
 		firing = false

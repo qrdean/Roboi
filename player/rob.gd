@@ -13,6 +13,7 @@ class_name RobPlayer extends CharacterBody2D
 func _ready():
 	movement_state_machine.init(self, animated_sprite, player_move_component)
 	hurtbox.take_damage.connect(_take_damage_bus)
+	health.dead.connect(_handle_death)
 
 func _unhandled_input(event: InputEvent) -> void:
 	movement_state_machine.process_input(event)
@@ -30,4 +31,8 @@ func shoot_gun() -> void:
 
 func _take_damage_bus(damage: int):
 	health.damaged.emit(damage)
+
+
+func _handle_death():
+	print_debug("get shit on NERD!!!!!")
 

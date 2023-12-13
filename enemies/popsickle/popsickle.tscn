@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dio5tw3p7syjk"]
+[gd_scene load_steps=19 format=3 uid="uid://dio5tw3p7syjk"]
 
 [ext_resource type="Texture2D" uid="uid://clqvo44vnb734" path="res://assets/popsickle.png" id="1_2pyqo"]
 [ext_resource type="Script" path="res://enemies/popsickle/popsickle.gd" id="1_eshyl"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://enemies/states/attack_idle.gd" id="10_7nfy5"]
 [ext_resource type="Script" path="res://enemies/states/attack_fire.gd" id="11_d5dom"]
 [ext_resource type="PackedScene" uid="uid://brh4uqbad42km" path="res://components/weapon_component.tscn" id="12_v1shg"]
+[ext_resource type="PackedScene" uid="uid://bpp055ril4sju" path="res://enemies/enemy_projectile.tscn" id="13_m8mom"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6m4vc"]
 atlas = ExtResource("1_2pyqo")
@@ -40,6 +41,7 @@ radius = 45.0
 [node name="popsickle" type="CharacterBody2D"]
 script = ExtResource("1_eshyl")
 player_node_name = "Rob"
+fire_node_name = "fire"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -83,8 +85,9 @@ move_speed = 100.0
 [node name="movement_component" type="Node" parent="."]
 script = ExtResource("9_ox6ho")
 
-[node name="attack_state_machine" type="Node" parent="."]
+[node name="attack_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("5_55wln")
+starting_state = NodePath("idle")
 
 [node name="idle" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("attack_fire")]
 script = ExtResource("10_7nfy5")
@@ -105,3 +108,4 @@ script = ExtResource("9_a0rgm")
 shape = SubResource("CircleShape2D_jdcen")
 
 [node name="weapon_component" parent="." instance=ExtResource("12_v1shg")]
+bullet_scene = ExtResource("13_m8mom")

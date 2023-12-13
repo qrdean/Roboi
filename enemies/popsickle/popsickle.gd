@@ -4,11 +4,15 @@ extends CharacterBody2D
 @onready var movement_state_machine: Node = $movement_state_machine
 @onready var movement_component = $movement_component
 
+@onready var attack_state_machine: Node = $attack_state_machine
+
 @onready var health: HealthComponent = $health_component
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var player_detection: Area2D = $player_detection
+@onready var weapon_component: WeaponComponent = $weapon_component
 
 @export var player_node_name: String
+@export var fire_node_name: String
 
 const SPEED = 75.0
 
@@ -20,7 +24,17 @@ func _ready():
 	for child in movement_state_machine.get_children():
 		child.player_detection = player_detection
 
+	for child in attack_state_machine.get_children():
+		child.player_detection = player_detection
+
+	var attack_state = attack_state_machine.get_node_or_null(fire_node_name)
+	if attack_state:
+		attack_state.weapon_component = weapon_component
+		attack_state.player_node = player_node
+		pass
+
 	movement_state_machine.init(self, animated_sprite, movement_component)
+	attack_state_machine.init(self, animated_sprite, movement_component)
 	hurtbox.take_damage.connect(_take_damage_bus)
 	health.dead.connect(_handle_death)
 
@@ -29,9 +43,11 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	movement_state_machine.process_physics(delta)
+	attack_state_machine.process_physics(delta)
 
 func _process(delta):
 	movement_state_machine.process_frame(delta)
+	attack_state_machine.process_frame(delta)
 
 func _take_damage_bus(damage: int):
 	health.damaged.emit(damage)
