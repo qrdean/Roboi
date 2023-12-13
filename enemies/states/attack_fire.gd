@@ -1,13 +1,12 @@
 extends State
 
 @export var attack_idle: State
+@export var number_of_shots: float = 3.0
+@export var frame_numbers: float = 0.5
 
 var player_detection: Area2D
 var weapon_component: WeaponComponent
 var player_node: CharacterBody2D
-
-var frame_numbers := 0.5
-var number_of_shots := 3.0
 
 var current_shot_count := 0.0
 var current_frame_count := 0.0
