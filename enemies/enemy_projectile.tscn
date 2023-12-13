@@ -1,39 +1,39 @@
 [gd_scene load_steps=10 format=3 uid="uid://bpp055ril4sju"]
 
 [ext_resource type="Script" path="res://enemies/enemy_projectile.gd" id="1_5c8hp"]
-[ext_resource type="Texture2D" uid="uid://b1yj1viy7dq8e" path="res://assets/elec_bullet-Sheet.png" id="1_e33ct"]
 [ext_resource type="Texture2D" uid="uid://b5f2vf632m5jh" path="res://assets/fire_bolt.png" id="2_81pnm"]
+[ext_resource type="Texture2D" uid="uid://s2q5i2m7v07g" path="res://assets/enemy_elec_bullet-Sheet.png" id="2_ro1e8"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pre55"]
-atlas = ExtResource("1_e33ct")
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qu5n"]
+atlas = ExtResource("2_ro1e8")
 region = Rect2(0, 0, 10, 10)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_03c3o"]
-atlas = ExtResource("1_e33ct")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mkwr"]
+atlas = ExtResource("2_ro1e8")
 region = Rect2(10, 0, 10, 10)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u3k6u"]
-atlas = ExtResource("1_e33ct")
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx2cy"]
+atlas = ExtResource("2_ro1e8")
 region = Rect2(20, 0, 10, 10)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mlwqc"]
-atlas = ExtResource("1_e33ct")
+[sub_resource type="AtlasTexture" id="AtlasTexture_qy2mc"]
+atlas = ExtResource("2_ro1e8")
 region = Rect2(30, 0, 10, 10)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6u2p3"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pre55")
+"texture": SubResource("AtlasTexture_4qu5n")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_03c3o")
+"texture": SubResource("AtlasTexture_6mkwr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u3k6u")
+"texture": SubResource("AtlasTexture_kx2cy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mlwqc")
+"texture": SubResource("AtlasTexture_qy2mc")
 }],
 "loop": true,
 "name": &"default",
@@ -52,6 +52,7 @@ SPEED = 150
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_6u2p3")
+frame_progress = 0.389819
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false

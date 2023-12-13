@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=37 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://state_machine/states/roll.gd" id="6_d2tv0"]
 [ext_resource type="Script" path="res://player/player_movement_component.gd" id="7_sr5gj"]
 [ext_resource type="Script" path="res://player/gun.gd" id="8_3yabc"]
+[ext_resource type="Script" path="res://state_machine/state.gd" id="8_t18el"]
 [ext_resource type="PackedScene" uid="uid://cywqfk1n2o7po" path="res://player/bullet.tscn" id="9_lh028"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="10_uiibx"]
 [ext_resource type="PackedScene" uid="uid://cnxxjdlmuf7bj" path="res://components/hurtbox.tscn" id="11_j5bhp"]
@@ -15,6 +16,26 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1cvsb"]
 radius = 4.0
 height = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_or0ay"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(256, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cop2b"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(272, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_of72p"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(288, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wieom"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(304, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyttg"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(320, 0, 16, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x48aq"]
 atlas = ExtResource("1_5ovme")
@@ -82,6 +103,29 @@ region = Rect2(176, 0, 16, 18)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ddcvn"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_or0ay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cop2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_of72p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wieom")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyttg")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x48aq")
@@ -165,7 +209,7 @@ shape = SubResource("CapsuleShape2D_1cvsb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ddcvn")
-animation = &"floatdown"
+animation = &"death"
 metadata/_edit_lock_ = true
 
 [node name="movement_component" type="Node" parent="."]
@@ -196,6 +240,11 @@ script = ExtResource("6_d2tv0")
 move_state = NodePath("../move_state")
 animation_name = "floatdown"
 move_speed = 175.0
+
+[node name="death_state" type="Node" parent="movement_state_machine"]
+script = ExtResource("8_t18el")
+animation_name = "death"
+move_speed = 2.08165e-12
 
 [node name="Weapon" type="Node2D" parent="."]
 script = ExtResource("8_3yabc")

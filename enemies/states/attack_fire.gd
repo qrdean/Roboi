@@ -2,7 +2,7 @@ extends State
 
 @export var attack_idle: State
 @export var number_of_shots: float = 3.0
-@export var frame_numbers: float = 0.5
+@export var fire_rate: float = 0.5
 
 var player_detection: Area2D
 var weapon_component: WeaponComponent
@@ -17,7 +17,7 @@ func enter() -> void:
 	parent.velocity.y = 0
 
 	current_shot_count = number_of_shots
-	current_frame_count = frame_numbers
+	current_frame_count = fire_rate
 
 func exit() -> void:
 	pass
@@ -31,7 +31,7 @@ func process_frame(_delta: float) -> State:
 func process_physics(delta: float) -> State:
 	current_frame_count -= delta
 	if current_frame_count <= 0.0:
-		current_frame_count = frame_numbers
+		current_frame_count = fire_rate
 		current_shot_count -= 1.0
 		weapon_component.shoot(player_node)
 

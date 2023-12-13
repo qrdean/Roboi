@@ -31,8 +31,17 @@ func shoot_gun() -> void:
 
 func _take_damage_bus(damage: int):
 	health.damaged.emit(damage)
-
+	for i in 4:
+		animated_sprite.self_modulate.a = 0.25
+		await get_tree().process_frame
+		await get_tree().process_frame
+		animated_sprite.self_modulate.a = 1.0
+		await get_tree().process_frame
+		await get_tree().process_frame
 
 func _handle_death():
-	print_debug("get shit on NERD!!!!!")
+	# pass
+	hurtbox.take_damage.disconnect(_take_damage_bus)
+	health.dead.disconnect(_handle_death)
+	movement_state_machine.change_state(movement_state_machine.get_node('death_state'))
 
