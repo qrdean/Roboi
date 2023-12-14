@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=40 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -101,6 +101,18 @@ region = Rect2(160, 0, 16, 18)
 atlas = ExtResource("1_5ovme")
 region = Rect2(176, 0, 16, 18)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mguwr"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(352, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24jwi"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(368, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tch13"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(384, 0, 16, 18)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ddcvn"]
 animations = [{
 "frames": [{
@@ -193,6 +205,20 @@ animations = [{
 "loop": true,
 "name": &"floatup",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mguwr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24jwi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tch13")
+}],
+"loop": false,
+"name": &"roll",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coxqi"]
@@ -209,7 +235,6 @@ shape = SubResource("CapsuleShape2D_1cvsb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ddcvn")
-animation = &"death"
 metadata/_edit_lock_ = true
 
 [node name="movement_component" type="Node" parent="."]
@@ -224,7 +249,6 @@ script = ExtResource("4_p00cl")
 move_state = NodePath("../move_state")
 roll_state = NodePath("../roll_state")
 animation_name = "default"
-move_speed = null
 
 [node name="move_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("roll_state", "idle_state")]
 script = ExtResource("5_hiu63")
@@ -235,16 +259,21 @@ down_animation_name = "floatdown"
 up_animation_name = "floatup"
 animation_name = "floatdown"
 
-[node name="roll_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state")]
+[node name="roll_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "roll_state", "idle_state")]
 script = ExtResource("6_d2tv0")
 move_state = NodePath("../move_state")
-animation_name = "floatdown"
+roll_state = NodePath(".")
+idle_state = NodePath("../idle_state")
+animation_name = "roll"
 move_speed = 175.0
 
 [node name="death_state" type="Node" parent="movement_state_machine"]
 script = ExtResource("8_t18el")
 animation_name = "death"
 move_speed = 2.08165e-12
+
+[node name="shield_state" type="Node" parent="movement_state_machine"]
+script = ExtResource("8_t18el")
 
 [node name="Weapon" type="Node2D" parent="."]
 script = ExtResource("8_3yabc")

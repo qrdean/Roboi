@@ -73,6 +73,7 @@ starting_state = NodePath("idle")
 [node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state")]
 script = ExtResource("4_psphh")
 move_state = NodePath("../move")
+time_to_move = 0.5
 animation_name = "default"
 move_speed = 100.0
 

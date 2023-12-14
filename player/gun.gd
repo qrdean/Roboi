@@ -2,12 +2,19 @@ class_name Gun extends Node2D
 
 @export var bullet_scene: PackedScene
 
-const SCALE_DEGREE = 15
+const SCALE_DEGREE = 5
+
+var max_charge: int = 10
+var weapon_charge: int
+
+signal refill_charge(int)
 
 # var weapon_resource: WeaponResource
 # var bullet_resource: BulletResource
 
 func _ready():
+	weapon_charge = max_charge
+	refill_charge.connect(_refill_weapon_charge)
 	pass
 	# if weapon_resource:
 	# 	if weapon_resource.texture:
@@ -27,15 +34,19 @@ func orbit_around_parent():
 	self.position = direction
 
 func shoot():
-	var bullet = bullet_scene.instantiate()
-	# bullet.resource = bullet_resource
-	bullet.position = self.global_position
-	bullet.direction = (get_global_mouse_position() - self.global_position).normalized()
-	get_parent().call_deferred("add_sibling", bullet)
+	if weapon_charge > 0:
+		weapon_charge -= 1
+		var bullet = bullet_scene.instantiate()
+		# bullet.resource = bullet_resource
+		bullet.position = self.global_position
+		bullet.direction = (get_global_mouse_position() - self.global_position).normalized()
+		get_parent().call_deferred("add_sibling", bullet)
 	
 # func set_stats(weapon_stats: WeaponResource):
 # 	bullet_scene = weapon_stats.bullet_scene
 # 	$Sprite2D.texture = weapon_stats.texture
 #	  bullet_resource = weapon_stats.bullet_resource
 
-
+func _refill_weapon_charge(charge: int):
+	weapon_charge += charge
+	weapon_charge = clampi(weapon_charge, 0, max_charge)
