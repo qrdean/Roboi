@@ -15,7 +15,6 @@ signal refill_charge(int)
 func _ready():
 	weapon_charge = max_charge
 	refill_charge.connect(_refill_weapon_charge)
-	pass
 	# if weapon_resource:
 	# 	if weapon_resource.texture:
 	# 		$Sprite2D.texture = weapon_resource.texture
@@ -36,6 +35,7 @@ func orbit_around_parent():
 func shoot():
 	if weapon_charge > 0:
 		weapon_charge -= 1
+		get_parent().debug_ui.update_ammo_text.emit(str(weapon_charge))
 		var bullet = bullet_scene.instantiate()
 		# bullet.resource = bullet_resource
 		bullet.position = self.global_position
@@ -50,3 +50,4 @@ func shoot():
 func _refill_weapon_charge(charge: int):
 	weapon_charge += charge
 	weapon_charge = clampi(weapon_charge, 0, max_charge)
+	get_parent().debug_ui.update_ammo_text.emit(str(weapon_charge))

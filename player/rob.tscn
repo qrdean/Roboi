@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=43 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cywqfk1n2o7po" path="res://player/bullet.tscn" id="9_lh028"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="10_uiibx"]
 [ext_resource type="PackedScene" uid="uid://cnxxjdlmuf7bj" path="res://components/hurtbox.tscn" id="11_j5bhp"]
+[ext_resource type="Script" path="res://player/Debug_UI.gd" id="13_5sa86"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1cvsb"]
 radius = 4.0
@@ -224,6 +225,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coxqi"]
 size = Vector2(8, 14)
 
+[sub_resource type="LabelSettings" id="LabelSettings_vvxus"]
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_yfwcn"]
+font_size = 10
+
 [node name="Rob" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_tortu")
@@ -291,3 +298,31 @@ collision_mask = 20
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_coxqi")
+
+[node name="Debug_UI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("13_5sa86")
+
+[node name="shield" type="Label" parent="Debug_UI"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -31.0
+offset_top = -31.0
+offset_right = 30.0
+offset_bottom = -17.0
+text = "Shield: 100%"
+label_settings = SubResource("LabelSettings_vvxus")
+
+[node name="ammo" type="Label" parent="Debug_UI"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -32.0
+offset_top = -21.0
+offset_right = 24.0
+offset_bottom = -7.0
+text = "Ammo: 10"
+label_settings = SubResource("LabelSettings_yfwcn")
