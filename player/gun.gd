@@ -39,7 +39,7 @@ func shoot():
 		var bullet = bullet_scene.instantiate()
 		# bullet.resource = bullet_resource
 		bullet.position = self.global_position
-		bullet.direction = (get_global_mouse_position() - self.global_position).normalized()
+		bullet.direction = (get_global_mouse_position() - get_parent().global_position).normalized()
 		get_parent().call_deferred("add_sibling", bullet)
 	
 # func set_stats(weapon_stats: WeaponResource):

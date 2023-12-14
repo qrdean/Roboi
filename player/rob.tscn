@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=44 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://player/gun.gd" id="8_3yabc"]
 [ext_resource type="Script" path="res://state_machine/state.gd" id="8_t18el"]
 [ext_resource type="PackedScene" uid="uid://cywqfk1n2o7po" path="res://player/bullet.tscn" id="9_lh028"]
+[ext_resource type="Script" path="res://player/states/shield.gd" id="9_sa810"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="10_uiibx"]
 [ext_resource type="PackedScene" uid="uid://cnxxjdlmuf7bj" path="res://components/hurtbox.tscn" id="11_j5bhp"]
 [ext_resource type="Script" path="res://player/Debug_UI.gd" id="13_5sa86"]
@@ -251,10 +252,11 @@ script = ExtResource("7_sr5gj")
 script = ExtResource("3_b33q2")
 starting_state = NodePath("idle_state")
 
-[node name="idle_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "roll_state")]
+[node name="idle_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "roll_state", "shield_state")]
 script = ExtResource("4_p00cl")
 move_state = NodePath("../move_state")
 roll_state = NodePath("../roll_state")
+shield_state = NodePath("../shield_state")
 animation_name = "default"
 
 [node name="move_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("roll_state", "idle_state")]
@@ -279,8 +281,10 @@ script = ExtResource("8_t18el")
 animation_name = "death"
 move_speed = 2.08165e-12
 
-[node name="shield_state" type="Node" parent="movement_state_machine"]
-script = ExtResource("8_t18el")
+[node name="shield_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("9_sa810")
+idle_state = NodePath("../idle_state")
+animation_name = "default"
 
 [node name="Weapon" type="Node2D" parent="."]
 script = ExtResource("8_3yabc")
@@ -300,7 +304,6 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_coxqi")
 
 [node name="Debug_UI" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

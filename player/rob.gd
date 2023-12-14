@@ -16,9 +16,6 @@ class_name RobPlayer extends CharacterBody2D
 var time_to_shield: float = 2.0
 var shield_charge_timer: float = 0.0
 
-# TODO: move into state machine for more control?
-var shielded
-
 func _ready():
 	shield_charge_timer = time_to_shield
 
@@ -31,11 +28,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	movement_state_machine.process_input(event)
 
 func _process(delta) -> void:
+	shield_process(delta)
 	movement_state_machine.process_frame(delta)
 
 func _physics_process(delta) -> void:
-	shield()
-	shield_process(delta)	
 	shoot_gun()
 	movement_state_machine.process_physics(delta)
 
@@ -43,25 +39,11 @@ func shoot_gun() -> void:
 	if Input.is_action_just_pressed("attack"):
 		gun.shoot()
 
-func shield() -> void:
-	if shield_charge > 0:
-		if Input.is_action_pressed("shield"):
-			shielded = true
-			return
-
-	shielded = false
-
 func shield_process(delta: float) -> void:
-	if shielded:
-		# TODO: placeholder for actual animation
+	if is_in_state('shield_state'):
 		shield_charge_timer = time_to_shield
-		shield_charge -= 1
-		debug_ui.update_shield_text.emit(str(shield_charge))
-		animated_sprite.self_modulate.a = 0.75
 		return
 
-	# TODO: placeholder for actual animation
-	animated_sprite.self_modulate.a = 1.0
 	if shield_charge < 400:
 		shield_charge_timer -= delta
 	else:
@@ -72,7 +54,7 @@ func shield_process(delta: float) -> void:
 		debug_ui.update_shield_text.emit(str(shield_charge))
 
 func _take_damage_bus(damage: int):
-	if shielded:
+	if is_in_state('shield_state'):
 		gun.refill_charge.emit(damage)
 		return
 
@@ -91,3 +73,6 @@ func _handle_death():
 	health.dead.disconnect(_handle_death)
 	movement_state_machine.change_state(movement_state_machine.get_node('death_state'))
 
+
+func is_in_state(state_node_name: String) -> bool:
+	return movement_state_machine.current_state == movement_state_machine.get_node_or_null(state_node_name)
