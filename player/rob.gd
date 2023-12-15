@@ -19,6 +19,7 @@ var power_generation := false
 var power_generation_timer = 2.0
 
 signal power_full(bool)
+signal charging(bool)
 
 func _ready():
 	shield_charge_timer = time_to_shield
@@ -90,7 +91,10 @@ func _take_damage_bus(damage: int):
 
 func set_power_generation(p_power_generation: bool) -> bool:
 	power_generation = p_power_generation
-	return gun.weapon_charge == gun.max_charge
+	if power_generation:
+		return gun.weapon_charge == gun.max_charge
+	else:
+		return false
 
 func _handle_death():
 	hurtbox.take_damage.disconnect(_take_damage_bus)

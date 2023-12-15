@@ -1,16 +1,22 @@
 extends StaticBody2D
 
-@export var power_generator_amount := 5000
-@export var power_generator_recharge := 10.0
+@export var power_generator_amount: int = 1000
+@export var power_generator_recharge: float = 10.0
+@export var player_node_name: String
 
 @onready var debug_ui: Control = $Debug_UI
 
 var player_charging := false
+var player_node: CharacterBody2D
 
 func _ready():
+	player_node = get_parent().get_node(player_node_name)
 	debug_ui.init(str(power_generator_amount))
 
 func _process(delta):
+	if power_generator_amount < 0:
+		player_charging = player_node.set_power_generation(false)
+
 	if player_charging:
 		power_generator_recharge = 10.0
 		power_generator_amount -= 1
@@ -33,3 +39,4 @@ func _on_area_2d_body_exited(player: RobPlayer):
 
 func _handle_power_full(power_full: bool):
 	player_charging = !power_full
+
