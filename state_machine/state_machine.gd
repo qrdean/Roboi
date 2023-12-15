@@ -1,4 +1,4 @@
-extends Node
+class_name BaseStateMachine extends Node
 
 @export var starting_state: State
 
@@ -33,3 +33,10 @@ func process_frame(delta: float) -> void:
 	var new_state = current_state.process_frame(delta)
 	if new_state:
 		change_state(new_state)
+
+# Helper functions
+func is_in_state(state_node_name: String) -> bool:
+	return self.current_state == self.get_node_or_null(state_node_name)
+
+func get_state_node(state_node_name: String) -> State:
+	return self.get_node(state_node_name)

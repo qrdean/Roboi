@@ -1,4 +1,4 @@
-extends State
+class_name AIAttackIdleState extends State
 
 @export var attack_fire: State
 

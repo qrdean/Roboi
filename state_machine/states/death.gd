@@ -1,4 +1,4 @@
-extends State
+class_name DeathState extends State
 
 func enter() -> void:
 	super()

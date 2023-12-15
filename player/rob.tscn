@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=48 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -115,6 +115,22 @@ region = Rect2(368, 0, 16, 18)
 atlas = ExtResource("1_5ovme")
 region = Rect2(384, 0, 16, 18)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4nvb"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(400, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50oxe"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(416, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq6gh"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(432, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf468"]
+atlas = ExtResource("1_5ovme")
+region = Rect2(448, 0, 16, 18)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ddcvn"]
 animations = [{
 "frames": [{
@@ -221,6 +237,23 @@ animations = [{
 "loop": false,
 "name": &"roll",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4nvb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50oxe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq6gh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kf468")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 8.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coxqi"]
@@ -243,6 +276,8 @@ shape = SubResource("CapsuleShape2D_1cvsb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ddcvn")
+frame = 3
+frame_progress = 0.0528698
 metadata/_edit_lock_ = true
 
 [node name="movement_component" type="Node" parent="."]
@@ -259,10 +294,11 @@ roll_state = NodePath("../roll_state")
 shield_state = NodePath("../shield_state")
 animation_name = "default"
 
-[node name="move_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("roll_state", "idle_state")]
+[node name="move_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("roll_state", "idle_state", "shield_state")]
 script = ExtResource("5_hiu63")
 roll_state = NodePath("../roll_state")
 idle_state = NodePath("../idle_state")
+shield_state = NodePath("../shield_state")
 side_animation_name = "floatside"
 down_animation_name = "floatdown"
 up_animation_name = "floatup"
@@ -284,7 +320,7 @@ move_speed = 2.08165e-12
 [node name="shield_state" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("9_sa810")
 idle_state = NodePath("../idle_state")
-animation_name = "default"
+animation_name = "shield"
 
 [node name="Weapon" type="Node2D" parent="."]
 script = ExtResource("8_3yabc")

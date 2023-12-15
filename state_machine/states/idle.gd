@@ -1,4 +1,4 @@
-extends State
+class_name IdleState extends State
 
 @export var move_state: State
 @export var roll_state: State

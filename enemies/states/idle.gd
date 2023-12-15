@@ -1,4 +1,4 @@
-extends State
+class_name AiIdleState extends State
 
 @export var move_state: State
 @export var charge_state: State

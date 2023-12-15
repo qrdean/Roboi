@@ -2,7 +2,7 @@ extends Control
 
 @onready var shield_text: Label = $shield
 @onready var ammo_text: Label = $ammo
-
+@onready var debug_ui: Control = $Debug_UI
 
 signal update_shield_text(String)
 signal update_ammo_text(String)

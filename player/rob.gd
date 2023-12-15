@@ -15,6 +15,10 @@ class_name RobPlayer extends CharacterBody2D
 
 var time_to_shield: float = 2.0
 var shield_charge_timer: float = 0.0
+var power_generation := false
+var power_generation_timer = 2.0
+
+signal power_full(bool)
 
 func _ready():
 	shield_charge_timer = time_to_shield
@@ -28,6 +32,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	movement_state_machine.process_input(event)
 
 func _process(delta) -> void:
+	process_power_generation(delta)
 	shield_process(delta)
 	movement_state_machine.process_frame(delta)
 
@@ -40,7 +45,7 @@ func shoot_gun() -> void:
 		gun.shoot()
 
 func shield_process(delta: float) -> void:
-	if is_in_state('shield_state'):
+	if movement_state_machine.is_in_state('shield_state'):
 		shield_charge_timer = time_to_shield
 		return
 
@@ -53,8 +58,24 @@ func shield_process(delta: float) -> void:
 		shield_charge += 1
 		debug_ui.update_shield_text.emit(str(shield_charge))
 
+func process_power_generation(delta) -> void:
+	if power_generation:
+		if gun.weapon_charge == gun.max_charge:
+			power_full.emit(true)
+			power_generation_timer = 2.0
+		else:
+			power_full.emit(false)
+			power_generation_timer -= delta
+
+		if power_generation_timer <= 0:
+			gun.refill_charge.emit(1)
+			power_generation_timer = 0.5
+
+	else:
+		power_generation_timer = 2.0
+
 func _take_damage_bus(damage: int):
-	if is_in_state('shield_state'):
+	if movement_state_machine.is_in_state('shield_state'):
 		gun.refill_charge.emit(damage)
 		return
 
@@ -67,12 +88,12 @@ func _take_damage_bus(damage: int):
 		await get_tree().process_frame
 		await get_tree().process_frame
 
+func set_power_generation(p_power_generation: bool) -> bool:
+	power_generation = p_power_generation
+	return gun.weapon_charge == gun.max_charge
+
 func _handle_death():
-	pass
 	hurtbox.take_damage.disconnect(_take_damage_bus)
 	health.dead.disconnect(_handle_death)
 	movement_state_machine.change_state(movement_state_machine.get_node('death_state'))
 
-
-func is_in_state(state_node_name: String) -> bool:
-	return movement_state_machine.current_state == movement_state_machine.get_node_or_null(state_node_name)

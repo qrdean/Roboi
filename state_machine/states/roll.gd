@@ -1,4 +1,4 @@
-extends Move
+extends MoveState
 
 @export var move_state: State
 

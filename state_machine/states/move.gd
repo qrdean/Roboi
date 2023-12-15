@@ -1,12 +1,15 @@
-class_name Move extends State
+class_name MoveState extends State
 
 @export var roll_state: State
 @export var idle_state: State
+@export var shield_state: State
 @export var side_animation_name: String
 @export var down_animation_name: String
 @export var up_animation_name: String
 
 func process_input(_event: InputEvent) -> State:
+	if Input.is_action_pressed('shield'):
+		return shield_state
 	if Input.is_action_just_pressed('roll'):
 		return roll_state
 

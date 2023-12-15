@@ -1,4 +1,4 @@
-extends Node
+class_name BlobMovementComponent extends Node
 
 var player_node: CharacterBody2D
 var player_detection: Area2D

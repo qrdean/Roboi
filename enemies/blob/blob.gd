@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Blob extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_state_machine: Node = $movement_state_machine

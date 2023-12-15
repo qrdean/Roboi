@@ -1,4 +1,4 @@
-class_name BlobMove extends State
+class_name BlobMoveState extends State
 
 @export var charge_state: State
 @export var idle_state: State
