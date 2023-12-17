@@ -340,6 +340,7 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_coxqi")
 
 [node name="Debug_UI" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

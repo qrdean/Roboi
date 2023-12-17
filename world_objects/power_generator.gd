@@ -4,18 +4,23 @@ extends StaticBody2D
 @export var power_generator_recharge: float = 10.0
 @export var player_node_name: String
 
+@onready var animations: AnimatedSprite2D = $AnimatedSprite2D
 @onready var debug_ui: Control = $Debug_UI
 
 var player_charging := false
 var player_node: CharacterBody2D
 
 func _ready():
+	animations.play('default')
 	player_node = get_parent().get_node(player_node_name)
 	debug_ui.init(str(power_generator_amount))
 
 func _process(delta):
 	if power_generator_amount < 0:
 		player_charging = player_node.set_power_generation(false)
+		animations.play('powerout')
+	else:
+		animations.play('default')
 
 	if player_charging:
 		power_generator_recharge = 10.0
