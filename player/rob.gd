@@ -21,12 +21,31 @@ var power_generation_timer = 2.0
 signal power_full(bool)
 signal charging(bool)
 
-var replacement_color_test: Plane = Plane(1.0,0.0,0.0,1.0)
+var replacement_color_red: Plane = Plane(1.0,0.0,0.0,1.0)
+var replacement_color_green: Plane = Plane(0.0,1.0,0.0,1.0)
+var replacement_color_blue: Plane = Plane(0.0,0.0,1.0,1.0)
+
+var current_shield_index: int = 0
+
+enum SHIELD_COLORS{
+	RED,
+	BLUE,
+	GREEN,
+	LENGTH
+}
+
+var current_shield_type_enum: SHIELD_COLORS
+var shield_color_plane_enum: Dictionary = {
+	SHIELD_COLORS.RED: replacement_color_red,
+	SHIELD_COLORS.BLUE: replacement_color_blue,
+	SHIELD_COLORS.GREEN: replacement_color_green
+}
 
 func _ready():
 	shield_charge_timer = time_to_shield
 
-	animated_sprite.material.set_shader_parameter("u_replacement_color", replacement_color_test)
+	current_shield_type_enum = SHIELD_COLORS.RED
+	animated_sprite.material.set_shader_parameter("u_replacement_color", replacement_color_red)
 
 	movement_state_machine.init(self, animated_sprite, player_move_component)
 	hurtbox.take_damage.connect(_take_damage_bus)
@@ -37,6 +56,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	movement_state_machine.process_input(event)
 
 func _process(delta) -> void:
+	next_shield()
 	process_power_generation(delta)
 	shield_process(delta)
 	movement_state_machine.process_frame(delta)
@@ -48,6 +68,14 @@ func _physics_process(delta) -> void:
 func shoot_gun() -> void:
 	if Input.is_action_just_pressed("attack"):
 		gun.shoot()
+
+func next_shield() -> void:
+	if Input.is_action_just_pressed('next_shield'):
+		current_shield_type_enum = (current_shield_type_enum + 1) % SHIELD_COLORS.LENGTH as SHIELD_COLORS
+		var replacement_color = shield_color_plane_enum.get(current_shield_type_enum)
+
+		animated_sprite.material.set_shader_parameter("u_replacement_color", replacement_color)
+
 
 func shield_process(delta: float) -> void:
 	if movement_state_machine.is_in_state('shield_state'):
