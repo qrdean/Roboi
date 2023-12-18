@@ -12,6 +12,9 @@ class_name RobPlayer extends CharacterBody2D
 @onready var debug_ui: Control = $Debug_UI
 
 @export var shield_charge: int = 400
+@export var replacement_color_red: Color
+@export var replacement_color_green: Color
+@export var replacement_color_blue: Color
 
 var time_to_shield: float = 2.0
 var shield_charge_timer: float = 0.0
@@ -20,10 +23,6 @@ var power_generation_timer = 2.0
 
 signal power_full(bool)
 signal charging(bool)
-
-var replacement_color_red: Plane = Plane(1.0,0.0,0.0,1.0)
-var replacement_color_green: Plane = Plane(0.0,1.0,0.0,1.0)
-var replacement_color_blue: Plane = Plane(0.0,0.0,1.0,1.0)
 
 var current_shield_index: int = 0
 
@@ -35,17 +34,19 @@ enum SHIELD_COLORS{
 }
 
 var current_shield_type_enum: SHIELD_COLORS
-var shield_color_plane_enum: Dictionary = {
-	SHIELD_COLORS.RED: replacement_color_red,
-	SHIELD_COLORS.BLUE: replacement_color_blue,
-	SHIELD_COLORS.GREEN: replacement_color_green
-}
+var shield_color_plane_enum: Dictionary
 
 func _ready():
-	shield_charge_timer = time_to_shield
 
+	shield_color_plane_enum = {
+		SHIELD_COLORS.RED: replacement_color_red,
+		SHIELD_COLORS.BLUE: replacement_color_blue,
+		SHIELD_COLORS.GREEN: replacement_color_green
+	}
 	current_shield_type_enum = SHIELD_COLORS.RED
 	animated_sprite.material.set_shader_parameter("u_replacement_color", replacement_color_red)
+
+	shield_charge_timer = time_to_shield
 
 	movement_state_machine.init(self, animated_sprite, player_move_component)
 	hurtbox.take_damage.connect(_take_damage_bus)
