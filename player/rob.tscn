@@ -333,6 +333,7 @@ animation_name = "shield"
 [node name="Weapon" type="Node2D" parent="."]
 script = ExtResource("8_3yabc")
 bullet_scene = ExtResource("9_lh028")
+max_charge = 25
 
 [node name="weapon_sprite" type="Sprite2D" parent="Weapon"]
 
