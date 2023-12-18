@@ -3,6 +3,7 @@ class_name AIAttackFireState extends State
 @export var attack_idle: State
 @export var number_of_shots: float = 3.0
 @export var fire_rate: float = 0.5
+@export var projectile_type: EnemyProjectileComponent.PROJECTILE_TYPE
 
 var player_detection: Area2D
 var weapon_component: WeaponComponent
@@ -33,7 +34,7 @@ func process_physics(delta: float) -> State:
 	if current_frame_count <= 0.0:
 		current_frame_count = fire_rate
 		current_shot_count -= 1.0
-		weapon_component.shoot(player_node)
+		weapon_component.shoot(player_node, projectile_type)
 
 	if current_shot_count <= 0.0:
 		return attack_idle

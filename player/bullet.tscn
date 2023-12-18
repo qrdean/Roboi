@@ -1,8 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://cywqfk1n2o7po"]
+[gd_scene load_steps=12 format=3 uid="uid://cywqfk1n2o7po"]
 
 [ext_resource type="Script" path="res://player/gun_bullet.gd" id="1_a50pf"]
 [ext_resource type="Texture2D" uid="uid://b5f2vf632m5jh" path="res://assets/fire_bolt.png" id="1_m1hub"]
 [ext_resource type="Texture2D" uid="uid://b1yj1viy7dq8e" path="res://assets/elec_bullet-Sheet.png" id="2_jvhhl"]
+[ext_resource type="Shader" path="res://color_replacement.gdshader" id="2_v4qfb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ei3r5"]
+shader = ExtResource("2_v4qfb")
+shader_parameter/u_color_key = null
+shader_parameter/u_replacement_color = null
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pre55"]
 atlas = ExtResource("2_jvhhl")
@@ -52,6 +58,7 @@ SPEED = 150
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 10
 texture_filter = 1
+material = SubResource("ShaderMaterial_ei3r5")
 sprite_frames = SubResource("SpriteFrames_xx01x")
 frame = 2
 frame_progress = 0.318259

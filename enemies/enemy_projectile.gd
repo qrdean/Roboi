@@ -4,40 +4,40 @@ class_name EnemyProjectileComponent extends Area2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
-# @export var resource: BulletResource
-
 @export var SPEED = 400
 @export var KNOCKBACK_POWER = 100.0
 @export var attack_damage = 1
 @export var attack_damage_type: PROJECTILE_TYPE  
+
+@export var replacement_color_red: Color
+@export var replacement_color_green: Color
+@export var replacement_color_blue: Color
+
 var direction = Vector2.RIGHT
 
 enum PROJECTILE_TYPE {
 	RED,
 	BLUE,
-	GREEN,
+	GREEN
 }
 
-# Called when the node enters the scene tree for the first time.
+var projectile_color_planes: Dictionary
+
 func _ready():
 	animation.play("default")
-	# if resource:
-	# 	SPEED = resource.bullet_speed
-	# 	KNOCKBACK_POWER = resource.knockback_power
-	# 	$Sprite2D.texture = resource.texture 
+	projectile_color_planes = {
+  	PROJECTILE_TYPE.RED: replacement_color_red,
+		PROJECTILE_TYPE.BLUE: replacement_color_blue,
+		PROJECTILE_TYPE.GREEN: replacement_color_green
+	}
+	
+	var color_replacement = projectile_color_planes.get(attack_damage_type)
+	animation.material.set_shader_parameter("u_replacement_color", color_replacement)
 
 	visible_on_screen.screen_exited.connect(_free_me)
-	# self.body_entered.connect(_hit_register)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	position += direction * SPEED * delta
-
-# func _hit_register(body: Node2D):
-# 	if body is Enemy:
-# 		var knockback_direction := Vector2(direction.x * KNOCKBACK_POWER, direction.y * KNOCKBACK_POWER)
-# 		body.take_damage(knockback_direction)
-# 		self.queue_free()
 
 func _free_me():
 	self.queue_free()
