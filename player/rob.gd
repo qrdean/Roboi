@@ -21,8 +21,12 @@ var power_generation_timer = 2.0
 signal power_full(bool)
 signal charging(bool)
 
+var replacement_color_test: Plane = Plane(1.0,0.0,0.0,1.0)
+
 func _ready():
 	shield_charge_timer = time_to_shield
+
+	animated_sprite.material.set_shader_parameter("u_replacement_color", replacement_color_test)
 
 	movement_state_machine.init(self, animated_sprite, player_move_component)
 	hurtbox.take_damage.connect(_take_damage_bus)

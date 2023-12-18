@@ -1,7 +1,8 @@
-[gd_scene load_steps=48 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=50 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
+[ext_resource type="Shader" path="res://color_replacement.gdshader" id="2_ecihp"]
 [ext_resource type="Script" path="res://state_machine/state_machine.gd" id="3_b33q2"]
 [ext_resource type="Script" path="res://state_machine/states/idle.gd" id="4_p00cl"]
 [ext_resource type="Script" path="res://state_machine/states/move.gd" id="5_hiu63"]
@@ -18,6 +19,11 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1cvsb"]
 radius = 4.0
 height = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ji345"]
+shader = ExtResource("2_ecihp")
+shader_parameter/u_color_key = Color(0.65098, 0.886275, 0.180392, 1)
+shader_parameter/u_replacement_color = Color(0.858824, 0.576471, 0.25098, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_or0ay"]
 atlas = ExtResource("1_5ovme")
@@ -275,9 +281,8 @@ shape = SubResource("CapsuleShape2D_1cvsb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_ji345")
 sprite_frames = SubResource("SpriteFrames_ddcvn")
-frame = 3
-frame_progress = 0.0528698
 metadata/_edit_lock_ = true
 
 [node name="movement_component" type="Node" parent="."]
