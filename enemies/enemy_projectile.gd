@@ -9,7 +9,14 @@ class_name EnemyProjectileComponent extends Area2D
 @export var SPEED = 400
 @export var KNOCKBACK_POWER = 100.0
 @export var attack_damage = 1
+@export var attack_damage_type: PROJECTILE_TYPE  
 var direction = Vector2.RIGHT
+
+enum PROJECTILE_TYPE {
+	RED,
+	BLUE,
+	GREEN,
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
