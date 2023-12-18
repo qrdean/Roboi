@@ -1,5 +1,6 @@
 extends StaticBody2D
 
+@export var max_power_generator_amount: int = 1000
 @export var power_generator_amount: int = 1000
 @export var power_generator_recharge: float = 10.0
 @export var player_node_name: String
@@ -28,7 +29,7 @@ func _process(delta):
 		debug_ui.update_power_text.emit(str(power_generator_amount))
 	else:
 		power_generator_recharge -= delta
-		if power_generator_recharge <= 0.0:
+		if power_generator_recharge <= 0.0 and power_generator_amount < max_power_generator_amount:
 			power_generator_amount += 1
 			debug_ui.update_power_text.emit(str(power_generator_amount))
 

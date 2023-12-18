@@ -60,7 +60,6 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_xnrjs")
 
 [node name="Debug_UI" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
