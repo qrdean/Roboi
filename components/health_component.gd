@@ -28,3 +28,6 @@ func _restore_health(health: int) -> void:
 	current_health += health
 	current_health = clampi(current_health, 0, max_health)
 	health_restored.emit()
+
+func get_percentage_health() -> float:
+	return (current_health as float/max_health as float) * 100

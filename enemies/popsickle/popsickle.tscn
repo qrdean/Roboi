@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dio5tw3p7syjk"]
+[gd_scene load_steps=20 format=3 uid="uid://dio5tw3p7syjk"]
 
 [ext_resource type="Texture2D" uid="uid://clqvo44vnb734" path="res://assets/popsickle.png" id="1_2pyqo"]
 [ext_resource type="Script" path="res://enemies/popsickle/popsickle.gd" id="1_eshyl"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://enemies/states/attack_fire.gd" id="11_d5dom"]
 [ext_resource type="PackedScene" uid="uid://brh4uqbad42km" path="res://components/weapon_component.tscn" id="12_v1shg"]
 [ext_resource type="PackedScene" uid="uid://bpp055ril4sju" path="res://enemies/enemy_projectile.tscn" id="13_m8mom"]
+[ext_resource type="PackedScene" uid="uid://csi0wrb84yqoo" path="res://components/UI/health_bar.tscn" id="14_wfnet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6m4vc"]
 atlas = ExtResource("1_2pyqo")
@@ -110,3 +111,9 @@ shape = SubResource("CircleShape2D_jdcen")
 
 [node name="weapon_component" parent="." instance=ExtResource("12_v1shg")]
 bullet_scene = ExtResource("13_m8mom")
+
+[node name="health_bar" parent="." instance=ExtResource("14_wfnet")]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = -10.0
+offset_bottom = -10.0
