@@ -4,7 +4,6 @@ class_name SceneManager extends Node2D
 var current_scene: World
 var next_scene_idx: int
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	if levels[0]:
 		next_scene_idx = 0
