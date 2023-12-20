@@ -40,6 +40,7 @@ size = Vector2(16, 15)
 radius = 45.0
 
 [node name="popsickle" type="CharacterBody2D"]
+collision_layer = 4
 script = ExtResource("1_eshyl")
 player_node_name = "Rob"
 fire_node_name = "fire"

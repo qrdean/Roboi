@@ -69,7 +69,8 @@ func _physics_process(delta) -> void:
 
 func shoot_gun() -> void:
 	if Input.is_action_just_pressed("attack"):
-		gun.shoot()
+		if !movement_state_machine.is_in_state('shield_state'):
+			gun.shoot()
 
 func next_shield() -> void:
 	if Input.is_action_just_pressed('next_shield'):

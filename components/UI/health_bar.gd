@@ -1,9 +1,7 @@
 extends Control
 
 @onready var progress_bar_ui: ProgressBar = $ProgressBar
-
 var starting_health_percentage = 100
-
 signal update_ui_percentage(float)
 
 # Called when the node enters the scene tree for the first time.

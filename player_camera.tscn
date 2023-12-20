@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dya0sqbsiub0f"]
+
+[ext_resource type="Script" path="res://Camera2D.gd" id="1_4xdk2"]
+
+[node name="Camera2D" type="Camera2D" node_paths=PackedStringArray("node_to_follow")]
+zoom = Vector2(0.75, 0.75)
+script = ExtResource("1_4xdk2")
+node_to_follow = NodePath("")
+metadata/_edit_lock_ = true

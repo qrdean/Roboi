@@ -35,9 +35,13 @@ func _ready():
 	animation.material.set_shader_parameter("u_replacement_color", color_replacement)
 
 	visible_on_screen.screen_exited.connect(_free_me)
+	body_entered.connect(_free_me_body)
 
 func _process(delta):
 	position += direction * SPEED * delta
 
 func _free_me():
+	self.queue_free()
+
+func _free_me_body(_body):
 	self.queue_free()
