@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpkh16ne1rdqk"]
+[gd_scene load_steps=9 format=3 uid="uid://dpkh16ne1rdqk"]
 
+[ext_resource type="Script" path="res://levels/world.gd" id="1_qc6ap"]
 [ext_resource type="TileSet" uid="uid://c3ck00lx7f5a5" path="res://components/world_tilemap.tres" id="1_swnbi"]
 [ext_resource type="PackedScene" uid="uid://fn12e6pvxrin" path="res://player/rob.tscn" id="2_kt2pe"]
 [ext_resource type="PackedScene" uid="uid://dya0sqbsiub0f" path="res://player_camera.tscn" id="3_58kb6"]
 [ext_resource type="PackedScene" uid="uid://co52g7coe8k5q" path="res://world_objects/power_generator.tscn" id="4_jjwhm"]
 [ext_resource type="PackedScene" uid="uid://dio5tw3p7syjk" path="res://enemies/popsickle/popsickle.tscn" id="5_udkqi"]
 [ext_resource type="PackedScene" uid="uid://domap6hqoebvh" path="res://enemies/blob/blob.tscn" id="6_dcjjk"]
+[ext_resource type="PackedScene" uid="uid://dcy7k5tica61f" path="res://world_objects/door.tscn" id="7_rbcps"]
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_qc6ap")
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -21,7 +24,9 @@ metadata/_edit_lock_ = true
 position = Vector2(84, 78)
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" parent="." instance=ExtResource("3_58kb6")]
+[node name="Camera2D" parent="." node_paths=PackedStringArray("node_to_follow") instance=ExtResource("3_58kb6")]
+zoom = Vector2(1, 1)
+node_to_follow = NodePath("../Rob")
 
 [node name="PowerGenerator" parent="." instance=ExtResource("4_jjwhm")]
 position = Vector2(132, 83)
@@ -58,3 +63,6 @@ position = Vector2(906, 118)
 
 [node name="PowerGenerator2" parent="." instance=ExtResource("4_jjwhm")]
 position = Vector2(834, 74)
+
+[node name="Door" parent="." instance=ExtResource("7_rbcps")]
+position = Vector2(197, 23)

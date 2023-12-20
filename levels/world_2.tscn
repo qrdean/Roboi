@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://1nbkxlgel3oi"]
+[gd_scene load_steps=6 format=3 uid="uid://1nbkxlgel3oi"]
 
+[ext_resource type="Script" path="res://levels/world.gd" id="1_20c4n"]
 [ext_resource type="TileSet" uid="uid://c3ck00lx7f5a5" path="res://components/world_tilemap.tres" id="1_hukp1"]
 [ext_resource type="PackedScene" uid="uid://fn12e6pvxrin" path="res://player/rob.tscn" id="2_fgr2d"]
 [ext_resource type="PackedScene" uid="uid://dya0sqbsiub0f" path="res://player_camera.tscn" id="3_6dffa"]
+[ext_resource type="PackedScene" uid="uid://dcy7k5tica61f" path="res://world_objects/door.tscn" id="5_tyhh6"]
 
 [node name="World2" type="Node2D"]
+script = ExtResource("1_20c4n")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -17,3 +20,6 @@ position = Vector2(69, 81)
 
 [node name="Camera2D" parent="." node_paths=PackedStringArray("node_to_follow") instance=ExtResource("3_6dffa")]
 node_to_follow = NodePath("../Rob")
+
+[node name="Door" parent="." instance=ExtResource("5_tyhh6")]
+position = Vector2(277, 74)
