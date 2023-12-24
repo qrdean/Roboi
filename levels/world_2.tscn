@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://1nbkxlgel3oi"]
+[gd_scene load_steps=7 format=3 uid="uid://1nbkxlgel3oi"]
 
 [ext_resource type="Script" path="res://levels/world.gd" id="1_20c4n"]
 [ext_resource type="TileSet" uid="uid://c3ck00lx7f5a5" path="res://components/world_tilemap.tres" id="1_hukp1"]
 [ext_resource type="PackedScene" uid="uid://fn12e6pvxrin" path="res://player/rob.tscn" id="2_fgr2d"]
 [ext_resource type="PackedScene" uid="uid://dya0sqbsiub0f" path="res://player_camera.tscn" id="3_6dffa"]
 [ext_resource type="PackedScene" uid="uid://dcy7k5tica61f" path="res://world_objects/door.tscn" id="5_tyhh6"]
+[ext_resource type="PackedScene" uid="uid://ceyatgxv6h6om" path="res://world_objects/battery_key.tscn" id="6_m1o4k"]
 
 [node name="World2" type="Node2D"]
 texture_filter = 1
@@ -23,3 +24,6 @@ node_to_follow = NodePath("../Rob")
 
 [node name="Door" parent="." instance=ExtResource("5_tyhh6")]
 position = Vector2(277, 74)
+
+[node name="battery_key" parent="." instance=ExtResource("6_m1o4k")]
+position = Vector2(121, 80)

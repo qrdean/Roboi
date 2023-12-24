@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://fn12e6pvxrin"]
+[gd_scene load_steps=52 format=3 uid="uid://fn12e6pvxrin"]
 
 [ext_resource type="Texture2D" uid="uid://b57l28ysxsano" path="res://assets/roboboi-Sheet.png" id="1_5ovme"]
 [ext_resource type="Script" path="res://player/rob.gd" id="1_tortu"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="10_uiibx"]
 [ext_resource type="PackedScene" uid="uid://cnxxjdlmuf7bj" path="res://components/hurtbox.tscn" id="11_j5bhp"]
 [ext_resource type="Script" path="res://player/Debug_UI.gd" id="13_5sa86"]
+[ext_resource type="Script" path="res://player/pickup_area.gd" id="15_u3dq1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1cvsb"]
 radius = 4.0
@@ -265,6 +266,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coxqi"]
 size = Vector2(8, 14)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_67l70"]
+radius = 9.0
+
 [sub_resource type="LabelSettings" id="LabelSettings_vvxus"]
 font_size = 10
 
@@ -346,6 +350,14 @@ collision_mask = 20
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_coxqi")
+
+[node name="pickup_area" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("15_u3dq1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pickup_area"]
+shape = SubResource("CircleShape2D_67l70")
 
 [node name="Debug_UI" type="Control" parent="."]
 layout_mode = 3

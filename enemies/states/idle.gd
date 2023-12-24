@@ -35,7 +35,7 @@ func process_frame(delta: float) -> State:
 		return charge_state
 	if move_timer <= 0.0:
 		return move_state
-
+ 
 	return null
 
 func _activate_charge():

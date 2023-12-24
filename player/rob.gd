@@ -10,6 +10,7 @@ class_name RobPlayer extends CharacterBody2D
 @onready var health: HealthComponent = $health_component
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var debug_ui: Control = $Debug_UI
+@onready var pickup_area: PlayerPickupArea = $pickup_area
 
 @export var shield_charge: int = 400
 @export var replacement_color_red: Color
@@ -20,6 +21,7 @@ var time_to_shield: float = 2.0
 var shield_charge_timer: float = 0.0
 var power_generation := false
 var power_generation_timer = 2.0
+var batter_key_pickedup := false
 
 signal power_full(bool)
 signal charging(bool)
@@ -52,6 +54,7 @@ func _ready():
 	hurtbox.take_damage.connect(_take_damage_bus)
 	hurtbox.take_damage_by_type.connect(_take_damage_bus_by_type)
 	health.dead.connect(_handle_death)
+	pickup_area.item_pickedup.connect(_item_pickup)
 	debug_ui.init(str(shield_charge), str(gun.max_charge))
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -167,3 +170,7 @@ func _handle_death():
 	# health.dead.disconnect(_handle_death)
 	# movement_state_machine.change_state(movement_state_machine.get_node('death_state'))
 
+
+func _item_pickup(item_name: String):
+	if item_name == 'battery_key':
+		batter_key_pickedup = true

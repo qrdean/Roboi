@@ -106,13 +106,15 @@ starting_state = NodePath("idle")
 script = ExtResource("6_x7jw3")
 move_state = NodePath("../move")
 charge_state = NodePath("../charge")
-move_speed = 75.0
+time_to_move = 0.25
+move_speed = 50.0
 
 [node name="move" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("charge_state", "idle_state")]
 script = ExtResource("7_5ef21")
 charge_state = NodePath("../charge")
 idle_state = NodePath("../idle")
-move_speed = 75.0
+time_to_idle = 1.5
+move_speed = 50.0
 
 [node name="charge" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state", "idle_state")]
 script = ExtResource("8_3j7t8")
