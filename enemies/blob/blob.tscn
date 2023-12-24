@@ -127,7 +127,6 @@ animation_name = "default"
 script = ExtResource("8_g1jrr")
 
 [node name="player_detection" type="Area2D" parent="."]
-collision_layer = 32
 collision_mask = 2
 script = ExtResource("9_aad2r")
 metadata/_edit_lock_ = true

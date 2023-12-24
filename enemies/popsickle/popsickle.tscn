@@ -127,7 +127,7 @@ fire_rate = 0.25
 animation_name = "default"
 
 [node name="player_detection" type="Area2D" parent="."]
-collision_layer = 32
+collision_layer = 4
 collision_mask = 2
 script = ExtResource("9_a0rgm")
 

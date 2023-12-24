@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpkh16ne1rdqk"]
+[gd_scene load_steps=11 format=3 uid="uid://dpkh16ne1rdqk"]
 
 [ext_resource type="Script" path="res://levels/world.gd" id="1_qc6ap"]
 [ext_resource type="TileSet" uid="uid://c3ck00lx7f5a5" path="res://components/world_tilemap.tres" id="1_swnbi"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dio5tw3p7syjk" path="res://enemies/popsickle/popsickle.tscn" id="5_udkqi"]
 [ext_resource type="PackedScene" uid="uid://domap6hqoebvh" path="res://enemies/blob/blob.tscn" id="6_dcjjk"]
 [ext_resource type="PackedScene" uid="uid://dcy7k5tica61f" path="res://world_objects/door.tscn" id="7_rbcps"]
+[ext_resource type="PackedScene" uid="uid://b4ad1y13srlw7" path="res://world_objects/room_door.tscn" id="9_akm60"]
+[ext_resource type="PackedScene" uid="uid://ceyatgxv6h6om" path="res://world_objects/battery_key.tscn" id="10_j7tfq"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_qc6ap")
@@ -20,7 +22,7 @@ layer_0/tile_data = PackedInt32Array(131074, 524288, 0, 131075, 524288, 0, 13107
 metadata/_edit_lock_ = true
 
 [node name="Door" parent="." instance=ExtResource("7_rbcps")]
-position = Vector2(197, 23)
+position = Vector2(826, 323)
 
 [node name="Rob" parent="." instance=ExtResource("2_kt2pe")]
 position = Vector2(84, 78)
@@ -64,3 +66,15 @@ position = Vector2(895, 9)
 
 [node name="blob6" parent="." instance=ExtResource("6_dcjjk")]
 position = Vector2(906, 118)
+
+[node name="room_door" parent="." instance=ExtResource("9_akm60")]
+position = Vector2(292, 48)
+
+[node name="battery_key" parent="." instance=ExtResource("10_j7tfq")]
+position = Vector2(227, 107)
+
+[node name="battery_key2" parent="." instance=ExtResource("10_j7tfq")]
+position = Vector2(593, 264)
+
+[node name="room_door2" parent="." instance=ExtResource("9_akm60")]
+position = Vector2(979, 257)
