@@ -1,0 +1,138 @@
+[gd_scene load_steps=16 format=3 uid="uid://b4ad1y13srlw7"]
+
+[ext_resource type="Script" path="res://world_objects/room_door.gd" id="1_f66te"]
+[ext_resource type="Texture2D" uid="uid://bghfhhjvlpohe" path="res://assets/test-shader-box.png" id="1_ru41n"]
+[ext_resource type="Texture2D" uid="uid://bnh2q522loeit" path="res://assets/door_placeholder-Sheet.png" id="2_rtwvd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijsat"]
+atlas = ExtResource("1_ru41n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ov1a5"]
+atlas = ExtResource("1_ru41n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rueso"]
+atlas = ExtResource("2_rtwvd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cot7r"]
+atlas = ExtResource("2_rtwvd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11of0"]
+atlas = ExtResource("2_rtwvd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbf8x"]
+atlas = ExtResource("2_rtwvd")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_617u4"]
+atlas = ExtResource("2_rtwvd")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tw2qb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijsat")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ov1a5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rueso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cot7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11of0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbf8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_617u4")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6puid"]
+
+[sub_resource type="Animation" id="Animation_28nrf"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"open"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ivmf0"]
+_data = {
+"open": SubResource("Animation_28nrf")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6h8a"]
+size = Vector2(28, 26)
+
+[node name="room_door" type="StaticBody2D"]
+script = ExtResource("1_f66te")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tw2qb")
+animation = &"open"
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6puid")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ivmf0")
+}
+
+[node name="player_detection" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection"]
+shape = SubResource("RectangleShape2D_s6h8a")

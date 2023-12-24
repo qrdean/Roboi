@@ -7,4 +7,4 @@
 
 [node name="world_manager" type="Node2D"]
 script = ExtResource("1_m20ik")
-levels = Array[PackedScene]([ExtResource("2_er5mn"), ExtResource("3_ypnwb"), ExtResource("4_ftu0s")])
+levels = Array[PackedScene]([ExtResource("3_ypnwb"), ExtResource("2_er5mn"), ExtResource("4_ftu0s")])
