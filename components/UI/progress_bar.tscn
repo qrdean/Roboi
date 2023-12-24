@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://mkhpqmb8gurb"]
+
+[ext_resource type="Script" path="res://components/UI/progress_bar.gd" id="1_ipuis"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bx8r1"]
+bg_color = Color(0.713726, 0, 0.0862745, 1)
+
+[node name="progress_bar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ipuis")
+progress_color = Color(0.909804, 0, 0.0235294, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 19.0
+offset_bottom = 4.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_bx8r1")
+value = 50.0
+show_percentage = false

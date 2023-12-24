@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpkh16ne1rdqk"]
+[gd_scene load_steps=12 format=3 uid="uid://dpkh16ne1rdqk"]
 
 [ext_resource type="Script" path="res://levels/world.gd" id="1_qc6ap"]
 [ext_resource type="TileSet" uid="uid://c3ck00lx7f5a5" path="res://components/world_tilemap.tres" id="1_swnbi"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dcy7k5tica61f" path="res://world_objects/door.tscn" id="7_rbcps"]
 [ext_resource type="PackedScene" uid="uid://b4ad1y13srlw7" path="res://world_objects/room_door.tscn" id="9_akm60"]
 [ext_resource type="PackedScene" uid="uid://ceyatgxv6h6om" path="res://world_objects/battery_key.tscn" id="10_j7tfq"]
+[ext_resource type="PackedScene" uid="uid://mkhpqmb8gurb" path="res://components/UI/progress_bar.tscn" id="11_h76f6"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_qc6ap")
@@ -78,3 +79,17 @@ position = Vector2(593, 264)
 
 [node name="room_door2" parent="." instance=ExtResource("9_akm60")]
 position = Vector2(979, 257)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="progress_bar" parent="Control" instance=ExtResource("11_h76f6")]
+layout_mode = 1
+offset_left = 12.0
+offset_top = 18.0
+offset_right = 12.0
+offset_bottom = 18.0
+progress_color = Color(0.607843, 0.203922, 1, 1)
