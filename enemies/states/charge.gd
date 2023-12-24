@@ -18,6 +18,7 @@ var inner_state: CHARGE_STATES
 func enter() -> void:
 	super()
 	
+	animations.play('charge_wind_up')
 	charge_timer = time_to_charge
 	wind_up = time_to_wind
 
@@ -37,8 +38,10 @@ func process_physics(delta: float) -> State:
 
 		CHARGE_STATES.CHARGE:
 			charge_timer -= delta
+			animations.play('charge')
 			if charge_timer <= 0.0:
 				return idle_state
+			parent.velocity = direction * delta
 			return super(delta)
 
 	return null

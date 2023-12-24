@@ -12,7 +12,7 @@ func _ready():
 		print_debug("ERROR: no levels set in scene manager")
 
 func load_scene(level: PackedScene):
-	# TODO: Add some kind of scene change animation
+	# TODO: Add some kind of scene transition animation
 	var next_level: World = level.instantiate()
 	next_scene_idx += 1
 

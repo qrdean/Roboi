@@ -12,6 +12,7 @@ var direction := Vector2(1.0, 0.0)
 
 func enter() -> void:
 	super()
+	animations.play('default')
 	parent.velocity.x = 0
 	parent.velocity.y = 0
 	move_timer = time_to_move

@@ -1,7 +1,6 @@
 class_name GunBullet extends Area2D
 
 @onready var visible_on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
-@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
 @export var SPEED = 400

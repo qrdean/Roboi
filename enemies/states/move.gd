@@ -12,6 +12,7 @@ var direction := Vector2(1.0, 0.0)
 
 func enter() -> void:
 	super()
+	animations.play('default')
 	idle_timer = time_to_idle
 	player_detection.player_detected.connect(_activate_charge)
 	direction = Vector2(pow(-1.0, randi() % 2), pow(-1.0, randi() % 2))

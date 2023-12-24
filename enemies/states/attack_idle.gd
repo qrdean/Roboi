@@ -8,6 +8,7 @@ var firing := false
 
 func enter() -> void:
 	super()
+	animations.play('default')
 	player_detection.player_detected.connect(_activate_fire)
 
 func exit() -> void:

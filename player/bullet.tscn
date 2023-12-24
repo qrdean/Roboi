@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cywqfk1n2o7po"]
+[gd_scene load_steps=11 format=3 uid="uid://cywqfk1n2o7po"]
 
 [ext_resource type="Script" path="res://player/gun_bullet.gd" id="1_a50pf"]
-[ext_resource type="Texture2D" uid="uid://b5f2vf632m5jh" path="res://assets/fire_bolt.png" id="1_m1hub"]
 [ext_resource type="Texture2D" uid="uid://b1yj1viy7dq8e" path="res://assets/elec_bullet-Sheet.png" id="2_jvhhl"]
 [ext_resource type="Shader" path="res://color_replacement.gdshader" id="2_v4qfb"]
 
@@ -62,11 +61,6 @@ material = SubResource("ShaderMaterial_ei3r5")
 sprite_frames = SubResource("SpriteFrames_xx01x")
 frame = 2
 frame_progress = 0.318259
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-texture = ExtResource("1_m1hub")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 

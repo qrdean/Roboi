@@ -17,6 +17,8 @@ func enter() -> void:
 	parent.velocity.x = 0
 	parent.velocity.y = 0
 
+	animations.play('attack')
+
 	current_shot_count = number_of_shots
 	current_frame_count = fire_rate
 

@@ -283,7 +283,6 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_1cvsb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
 material = SubResource("ShaderMaterial_ji345")
 sprite_frames = SubResource("SpriteFrames_ddcvn")
 metadata/_edit_lock_ = true

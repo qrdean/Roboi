@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://domap6hqoebvh"]
+[gd_scene load_steps=21 format=3 uid="uid://domap6hqoebvh"]
 
 [ext_resource type="Script" path="res://enemies/blob/blob.gd" id="1_hjuuw"]
 [ext_resource type="Texture2D" uid="uid://ddvvntw6pgxax" path="res://assets/slime_enemy.png" id="1_qtw4c"]
+[ext_resource type="Texture2D" uid="uid://ujvqitr2ucri" path="res://assets/slime_enemy-Sheet.png" id="2_5pil4"]
 [ext_resource type="PackedScene" uid="uid://bk25ew5v8m2cm" path="res://components/health_component.tscn" id="2_x7mgb"]
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="3_knxtb"]
 [ext_resource type="Script" path="res://state_machine/state_machine.gd" id="5_vbfv3"]
@@ -15,12 +16,43 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_leckk"]
 size = Vector2(32, 20)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_exxf8"]
+atlas = ExtResource("2_5pil4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tkrt"]
+atlas = ExtResource("2_5pil4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwm7a"]
+atlas = ExtResource("2_5pil4")
+region = Rect2(32, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_siekb"]
 atlas = ExtResource("1_qtw4c")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l7156"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exxf8")
+}],
+"loop": true,
+"name": &"charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tkrt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwm7a")
+}],
+"loop": true,
+"name": &"charge_wind_up",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_siekb")
@@ -33,8 +65,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgyef"]
 size = Vector2(33, 22)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni2vs"]
-size = Vector2(20, 61)
+[sub_resource type="CircleShape2D" id="CircleShape2D_qghic"]
+radius = 45.0
 
 [node name="blob" type="CharacterBody2D"]
 collision_layer = 4
@@ -50,6 +82,7 @@ metadata/_edit_lock_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_l7156")
+animation = &"charge"
 metadata/_edit_lock_ = true
 
 [node name="health_component" parent="." instance=ExtResource("2_x7mgb")]
@@ -98,8 +131,7 @@ script = ExtResource("9_aad2r")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection"]
-position = Vector2(0, -20.5)
-shape = SubResource("RectangleShape2D_ni2vs")
+shape = SubResource("CircleShape2D_qghic")
 
 [node name="health_bar" parent="." instance=ExtResource("11_b23l0")]
 offset_left = -10.0

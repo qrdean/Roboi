@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="roboboi"
-run/main_scene="res://levels/world.tscn"
+run/main_scene="res://levels/world_manager.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -73,3 +73,7 @@ next_shield={
 2d_physics/layer_3="enemy"
 2d_physics/layer_4="player_projectile"
 2d_physics/layer_5="enemy_projectile"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
