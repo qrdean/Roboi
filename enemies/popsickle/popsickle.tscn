@@ -78,7 +78,7 @@ shape = SubResource("RectangleShape2D_clxk5")
 metadata/_edit_lock_ = true
 
 [node name="health_component" parent="." instance=ExtResource("3_6ojk0")]
-max_health = 5
+max_health = 1
 
 [node name="Hurtbox" parent="." instance=ExtResource("2_u0d5f")]
 collision_layer = 4

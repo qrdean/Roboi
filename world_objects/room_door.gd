@@ -8,7 +8,9 @@ func _ready():
 	animation_player.animation_finished.connect(_remove_door)
 
 func _open_door(body: Node2D):
-	if body is RobPlayer and body.batter_key_pickedup:
+	if body is RobPlayer and body.battery_key_pickedup:
+		body.battery_key_pickedup = false
+		body.ui_overlay_node.update_battery_ui.emit(0)
 		open_door()
 
 func _remove_door(anim_name: String):

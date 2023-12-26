@@ -20,6 +20,8 @@ func process_physics(_delta: float) -> State:
 		return idle_state
 
 	parent.shield_charge -= 1
-	parent.debug_ui.update_shield_text.emit(str(parent.shield_charge))
+	var percentage = parent.get_percentage(parent.shield_charge as float, 400 as float)
+	parent.ui_overlay_node.update_shield_ui.emit(percentage)
+	# parent.debug_ui.update_shield_text.emit(str(parent.shield_charge))
 	return null
 

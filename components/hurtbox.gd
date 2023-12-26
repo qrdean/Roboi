@@ -13,5 +13,5 @@ func _area_entered(_area: Area2D):
 
 	if 'attack_damage' in _area:
 		take_damage.emit(_area.attack_damage)
-	else:
-		take_damage.emit(1)
+	# else:
+	# 	take_damage.emit(1)

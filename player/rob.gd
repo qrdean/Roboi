@@ -11,6 +11,7 @@ class_name RobPlayer extends CharacterBody2D
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var debug_ui: Control = $Debug_UI
 @onready var pickup_area: PlayerPickupArea = $pickup_area
+@onready var ui_overlay_node: UI_Overlay = get_node('/root/world_manager/UI_Overlay')
 
 @export var shield_charge: int = 400
 @export var replacement_color_red: Color
@@ -21,7 +22,7 @@ var time_to_shield: float = 2.0
 var shield_charge_timer: float = 0.0
 var power_generation := false
 var power_generation_timer = 2.0
-var batter_key_pickedup := false
+var battery_key_pickedup := false
 
 signal power_full(bool)
 signal charging(bool)
@@ -95,7 +96,9 @@ func shield_process(delta: float) -> void:
 
 	if shield_charge_timer <= 0:
 		shield_charge += 1
-		debug_ui.update_shield_text.emit(str(shield_charge))
+		var percentage = get_percentage(shield_charge as float, 400 as float)
+		ui_overlay_node.update_shield_ui.emit(percentage)
+		# debug_ui.update_shield_text.emit(str(shield_charge))
 
 func process_power_generation(delta) -> void:
 	if power_generation:
@@ -121,9 +124,13 @@ func _take_damage_bus_by_type(attack_damage_type: EnemyProjectileComponent.PROJE
 			return
 		else:
 			shield_charge -= attack_damage * 5
-			debug_ui.update_shield_text.emit(str(shield_charge))
+			var shield_percentage = get_percentage(shield_charge as float, 400 as float)
+			ui_overlay_node.update_shield_ui.emit(shield_percentage)
+			# debug_ui.update_shield_text.emit(str(shield_charge))
 	
 	health.damaged.emit(attack_damage)
+	var percentage = health.get_percentage_health()
+	ui_overlay_node.update_health_ui.emit(percentage)
 	for i in 4:
 		animated_sprite.self_modulate.a = 0.25
 		await get_tree().process_frame
@@ -149,6 +156,8 @@ func _take_damage_bus(damage: int):
 		return
 
 	health.damaged.emit(damage)
+	var percentage = health.get_percentage_health()
+	ui_overlay_node.update_health_ui.emit(percentage)
 	for i in 4:
 		animated_sprite.self_modulate.a = 0.25
 		await get_tree().process_frame
@@ -172,5 +181,9 @@ func _handle_death():
 
 
 func _item_pickup(item_name: String):
-	if item_name == 'battery_key':
-		batter_key_pickedup = true
+	if item_name.contains('battery_key'):
+		battery_key_pickedup = true
+		ui_overlay_node.update_battery_ui.emit(1)
+
+func get_percentage(current: float, p_max: float) -> float:
+	return (current/p_max) * 100

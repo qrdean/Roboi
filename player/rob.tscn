@@ -344,6 +344,7 @@ max_charge = 25
 max_health = 5
 
 [node name="Hurtbox" parent="." instance=ExtResource("11_j5bhp")]
+visible = false
 collision_layer = 2
 collision_mask = 20
 
@@ -360,6 +361,7 @@ script = ExtResource("15_u3dq1")
 shape = SubResource("CircleShape2D_67l70")
 
 [node name="Debug_UI" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

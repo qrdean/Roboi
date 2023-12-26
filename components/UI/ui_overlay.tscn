@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://fvlyn0lx4jm6"]
+[gd_scene load_steps=11 format=3 uid="uid://fvlyn0lx4jm6"]
 
 [ext_resource type="Script" path="res://components/UI/ui_overlay.gd" id="1_qnnf7"]
+[ext_resource type="Texture2D" uid="uid://dw7o1xtg7dxi3" path="res://assets/battery_key.png" id="2_bkv46"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kh38o"]
 bg_color = Color(0.6, 0.6, 0.6, 0.490196)
@@ -50,6 +51,13 @@ border_width_top = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_hfrhe"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_upyh7"]
+line_spacing = 1.0
+font = SubResource("SystemFont_hfrhe")
+font_size = 10
+
 [node name="UI_Overlay" type="CanvasLayer"]
 script = ExtResource("1_qnnf7")
 
@@ -60,6 +68,7 @@ offset_right = 33.0
 offset_bottom = 22.0
 
 [node name="Health" type="ProgressBar" parent="Player_Values"]
+layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 30.0
@@ -70,6 +79,7 @@ value = 50.0
 show_percentage = false
 
 [node name="Shield" type="ProgressBar" parent="Player_Values"]
+layout_mode = 0
 offset_left = 2.0
 offset_top = 8.0
 offset_right = 30.0
@@ -80,6 +90,7 @@ value = 50.0
 show_percentage = false
 
 [node name="Ammo" type="ProgressBar" parent="Player_Values"]
+layout_mode = 0
 offset_left = 2.0
 offset_top = 14.0
 offset_right = 30.0
@@ -88,3 +99,25 @@ theme_override_styles/background = SubResource("StyleBoxFlat_jynvv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_8h1n3")
 value = 50.0
 show_percentage = false
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -22.0
+offset_top = 4.0
+offset_right = 18.0
+offset_bottom = 44.0
+grow_horizontal = 0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_bkv46")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0"
+label_settings = SubResource("LabelSettings_upyh7")
+horizontal_alignment = 1
+metadata/_edit_lock_ = true
