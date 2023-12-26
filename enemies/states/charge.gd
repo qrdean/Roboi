@@ -5,6 +5,8 @@ class_name BlobChargeState extends BlobMoveState
 @export var time_to_charge := 1.5
 @export var time_to_wind := 0.5
 
+@export var hitbox: Hitbox
+
 var charge_timer := 0.0
 var wind_up := 0.0
 
@@ -37,9 +39,11 @@ func process_physics(delta: float) -> State:
 			return null
 
 		CHARGE_STATES.CHARGE:
+			hitbox.set_active()
 			charge_timer -= delta
 			animations.play('charge')
 			if charge_timer <= 0.0:
+				hitbox.set_inactive()
 				return idle_state
 			parent.velocity = direction * delta
 			return super(delta)

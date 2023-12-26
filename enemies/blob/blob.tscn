@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://domap6hqoebvh"]
+[gd_scene load_steps=23 format=3 uid="uid://domap6hqoebvh"]
 
 [ext_resource type="Script" path="res://enemies/blob/blob.gd" id="1_hjuuw"]
 [ext_resource type="Texture2D" uid="uid://ddvvntw6pgxax" path="res://assets/slime_enemy.png" id="1_qtw4c"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://enemies/blob_movement_component.gd" id="8_g1jrr"]
 [ext_resource type="Script" path="res://enemies/player_detection.gd" id="9_aad2r"]
 [ext_resource type="PackedScene" uid="uid://csi0wrb84yqoo" path="res://components/UI/health_bar.tscn" id="11_b23l0"]
+[ext_resource type="PackedScene" uid="uid://bs2gtwnamci05" path="res://components/hitbox_component.tscn" id="13_iomm8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_leckk"]
 size = Vector2(32, 20)
@@ -68,6 +69,9 @@ size = Vector2(33, 22)
 [sub_resource type="CircleShape2D" id="CircleShape2D_qghic"]
 radius = 45.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3lgfj"]
+size = Vector2(32, 20)
+
 [node name="blob" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_hjuuw")
@@ -89,6 +93,7 @@ metadata/_edit_lock_ = true
 max_health = 2
 
 [node name="Hurtbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 8
 script = ExtResource("3_knxtb")
@@ -116,9 +121,10 @@ idle_state = NodePath("../idle")
 time_to_idle = 1.5
 move_speed = 50.0
 
-[node name="charge" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "charge_state", "idle_state")]
+[node name="charge" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("move_state", "hitbox", "charge_state", "idle_state")]
 script = ExtResource("8_3j7t8")
 move_state = NodePath("../move")
+hitbox = NodePath("../../Hitbox")
 charge_state = NodePath(".")
 idle_state = NodePath("../idle")
 animation_name = "default"
@@ -127,6 +133,7 @@ animation_name = "default"
 script = ExtResource("8_g1jrr")
 
 [node name="player_detection" type="Area2D" parent="."]
+visible = false
 collision_mask = 2
 script = ExtResource("9_aad2r")
 metadata/_edit_lock_ = true
@@ -139,3 +146,11 @@ offset_left = -10.0
 offset_top = -9.0
 offset_right = -10.0
 offset_bottom = -9.0
+
+[node name="Hitbox" parent="." instance=ExtResource("13_iomm8")]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_3lgfj")

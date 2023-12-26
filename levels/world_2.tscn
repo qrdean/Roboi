@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://fn12e6pvxrin" path="res://player/rob.tscn" id="2_fgr2d"]
 [ext_resource type="PackedScene" uid="uid://dya0sqbsiub0f" path="res://player_camera.tscn" id="3_6dffa"]
 [ext_resource type="PackedScene" uid="uid://dcy7k5tica61f" path="res://world_objects/door.tscn" id="5_tyhh6"]
-[ext_resource type="PackedScene" uid="uid://dio5tw3p7syjk" path="res://enemies/popsickle/popsickle.tscn" id="6_6vrvq"]
+[ext_resource type="PackedScene" uid="uid://domap6hqoebvh" path="res://enemies/blob/blob.tscn" id="6_iwd8x"]
 
 [node name="World2" type="Node2D"]
 texture_filter = 1
@@ -25,5 +25,5 @@ node_to_follow = NodePath("../Rob")
 [node name="Door" parent="." instance=ExtResource("5_tyhh6")]
 position = Vector2(277, 74)
 
-[node name="popsickle" parent="." instance=ExtResource("6_6vrvq")]
-position = Vector2(244, 117)
+[node name="blob" parent="." instance=ExtResource("6_iwd8x")]
+position = Vector2(181, 134)
