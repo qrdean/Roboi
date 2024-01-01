@@ -16,12 +16,12 @@ func enter() -> void:
 	idle_timer = time_to_idle
 	player_detection.player_detected.connect(_activate_charge)
 	# Picks a random direction every tick.
-	# var something = randi() % 2 as bool
-	# if something:
-	# 	direction = Vector2(pow(-1.0, randi() % 2), pow(-1.0, randi() % 2))
-	# else:
-	# 	direction = super.get_movement_input()
-	direction = Vector2(pow(-1.0, randi() % 2), pow(-1.0, randi() % 2))
+	var something = randi() % 2 as bool
+	if something:
+		direction = Vector2(pow(-1.0, randi() % 2), pow(-1.0, randi() % 2))
+	else:
+		direction = super.get_movement_input()
+	# direction = Vector2(pow(-1.0, randi() % 2), pow(-1.0, randi() % 2))
 
 func exit() -> void:
 	player_detection.player_detected.disconnect(_activate_charge)
