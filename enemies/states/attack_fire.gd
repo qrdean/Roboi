@@ -5,6 +5,9 @@ class_name AIAttackFireState extends State
 @export var fire_rate: float = 0.5
 @export var projectile_type: EnemyProjectileComponent.PROJECTILE_TYPE
 
+@export var is_pattern: bool = false
+@export var pattern_array: Array[Vector2]
+
 var player_detection: Area2D
 var weapon_component: WeaponComponent
 var player_node: CharacterBody2D
@@ -33,10 +36,14 @@ func process_frame(_delta: float) -> State:
 
 func process_physics(delta: float) -> State:
 	current_frame_count -= delta
+
 	if current_frame_count <= 0.0:
 		current_frame_count = fire_rate
 		current_shot_count -= 1.0
-		weapon_component.shoot(player_node, projectile_type)
+		if is_pattern:
+			weapon_component.shoot_pattern(pattern_array, projectile_type)
+		else:
+			weapon_component.shoot(player_node, projectile_type)
 
 	if current_shot_count <= 0.0:
 		return attack_idle
