@@ -12,6 +12,8 @@ enum SWING_STATES{
 @onready var wind_up := time_to_wind
 @onready var inner_state: SWING_STATES = SWING_STATES.WINDUP
 
+var player_detection
+
 func enter() -> void:
 	super()
 	# animations.play('swing_wind_up')

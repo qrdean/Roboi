@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cimq35kc24wmj"]
+[gd_scene load_steps=24 format=3 uid="uid://cimq35kc24wmj"]
 
 [ext_resource type="Texture2D" uid="uid://cwfw2ypd7kgrf" path="res://assets/warden.png" id="1_cq4pw"]
 [ext_resource type="Script" path="res://enemies/warden/warden.gd" id="1_esu54"]
@@ -10,9 +10,11 @@
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="8_parld"]
 [ext_resource type="Script" path="res://enemies/player_detection.gd" id="9_c1hqq"]
 [ext_resource type="PackedScene" uid="uid://brh4uqbad42km" path="res://components/weapon_component.tscn" id="10_oxhcf"]
+[ext_resource type="PackedScene" uid="uid://bs2gtwnamci05" path="res://components/hitbox_component.tscn" id="10_telwv"]
 [ext_resource type="Script" path="res://enemies/states/attack_idle.gd" id="10_y5bts"]
 [ext_resource type="Script" path="res://enemies/states/attack_fire.gd" id="11_cfmda"]
 [ext_resource type="PackedScene" uid="uid://bpp055ril4sju" path="res://enemies/enemy_projectile.tscn" id="11_yxj2a"]
+[ext_resource type="Script" path="res://enemies/warden/swing.gd" id="12_3xvqh"]
 [ext_resource type="PackedScene" uid="uid://csi0wrb84yqoo" path="res://components/UI/health_bar.tscn" id="14_b7kka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pyscw"]
@@ -48,6 +50,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u3kx6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s728p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ptqsf"]
 
 [node name="warden" type="CharacterBody2D"]
 collision_layer = 4
@@ -100,6 +104,14 @@ script = ExtResource("9_c1hqq")
 scale = Vector2(4, 4)
 shape = SubResource("CircleShape2D_s728p")
 
+[node name="Hitbox" parent="." instance=ExtResource("10_telwv")]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 28)
+shape = SubResource("RectangleShape2D_ptqsf")
+
 [node name="attack_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_xqwt1")
 starting_state = NodePath("idle")
@@ -117,6 +129,11 @@ projectile_type = 1
 is_pattern = true
 pattern_array = Array[Vector2]([Vector2(0.5, 0.5), Vector2(-0.5, -0.5), Vector2(0.5, -0.5), Vector2(-0.5, 0.5)])
 animation_name = "default"
+
+[node name="swing" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("attack_idle", "hitbox")]
+script = ExtResource("12_3xvqh")
+attack_idle = NodePath("../idle")
+hitbox = NodePath("../../Hitbox")
 
 [node name="weapon_component" parent="." instance=ExtResource("10_oxhcf")]
 bullet_scene = ExtResource("11_yxj2a")
